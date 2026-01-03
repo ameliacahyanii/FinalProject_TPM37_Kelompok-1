@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login | TPM Hackathon</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../config/tailwind.config.js"></script>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body
+    class="bg-background flex items-center justify-center min-h-screen text-body"
+  >
+    <form
+      class="bg-neutral-primary p-8 rounded-base shadow w-full max-w-md border border-border-default"
+    >
+      <h2 class="text-xl font-bold mb-6 text-center text-heading">
+        Admin Login
+      </h2>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium mb-1">Username</label>
+        <input
+          class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand outline-none"
+          placeholder="Admin username"
+        />
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-1">Password</label>
+        <input
+          type="password"
+          class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand outline-none"
+          placeholder="Password"
+        />
+      </div>
+
+      <a
+        href="./admin-dashboard.html"
+        class="block w-full text-center bg-brand text-white py-2 mb-4 rounded-base hover:bg-brand-dark transition font-medium"
+      >
+        Login
+      </a>
+
+      <a
+        href="../login.html"
+        class="block w-full text-center bg-neutral-secondary-soft text-heading py-2 rounded-base border border-border-default hover:bg-neutral-tertiary transition font-medium"
+      >
+        Login as Participants
+      </a>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+  </body>
+</html>

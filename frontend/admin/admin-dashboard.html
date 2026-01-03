@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | TPM Hackathon</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../config/tailwind.config.js"></script>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-background text-body">
+    <main class="p-8">
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold text-heading mb-6">Admin Management</h1>
+        <a
+          href="../index.html"
+          class="text-sm font-medium text-muted hover:text-brand transition"
+        >
+          Logout
+        </a>
+      </div>
+
+      <div
+        class="overflow-x-auto bg-neutral-primary rounded-base shadow border border-border-default"
+      >
+        <table class="w-full text-sm">
+          <thead class="bg-neutral-secondary-soft text-heading">
+            <tr>
+              <th class="p-3 text-left">Name</th>
+              <th class="p-3 text-left">Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-border-default">
+              <td class="p-3">Admin 1</td>
+              <td class="p-3 font-medium">Super Admin</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+  </body>
+</html>

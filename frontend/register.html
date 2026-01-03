@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register | TPM Hackathon</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Tailwind Config -->
+    <script src="./config/tailwind.config.js"></script>
+
+    <!-- Flowbite CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-background text-body">
+    <div class="min-h-screen flex items-center justify-center px-4">
+      <form
+        class="bg-neutral-primary p-8 rounded-base shadow w-full max-w-lg border border-border-default"
+      >
+        <h2 class="text-2xl font-bold mb-6 text-heading text-center">
+          Registrasi Tim
+        </h2>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1">Nama Tim</label>
+          <input
+            class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+            placeholder="Nama Tim"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1">Password</label>
+          <input
+            type="password"
+            class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+            placeholder="Password"
+          />
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium mb-1"
+            >Konfirmasi Password</label
+          >
+          <input
+            type="password"
+            class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+            placeholder="Ulangi Password"
+          />
+        </div>
+
+        <a
+          href="./login.html"
+          class="block w-full text-center bg-brand text-white py-2 mb-4 rounded-base hover:bg-brand-dark transition font-medium"
+        >
+          Daftar
+        </a>
+
+        <p class="text-sm text-muted mt-4 text-center">
+          Sudah punya akun?
+          <a href="login.html" class="text-brand hover:underline"> Login </a>
+        </p>
+      </form>
+    </div>
+
+    <!-- Flowbite JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+  </body>
+</html>
