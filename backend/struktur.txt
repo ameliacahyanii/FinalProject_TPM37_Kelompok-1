@@ -1,0 +1,46 @@
+my-hackathon-project/
+│
+├── node_modules/             # Dependensi project (Express, Prisma, dll)
+├── prisma/                   # Database Configuration
+│   ├── migrations/           # History perubahan database
+│   ├── schema.prisma         # Skema/Desain Database Utama
+│   └── seed.js               # Script untuk buat data awal (Admin user)
+│
+├── public/                   # [FRONTEND] Semua file yang diakses user/browser
+│   ├── css/
+│   │   └── style.css         # Output CSS (Hasil compile Tailwind)
+│   ├── images/               # Logo, banner, aset gambar
+│   ├── js/
+│   │   ├── api.js            # Fungsi fetch ke Backend (Login, Register)
+│   │   └── ui.js             # Logika DOM manipulasi (Show/Hide error, Modal)
+│   ├── uploads/              # [STORAGE] Tempat simpan file CV/ID Card user
+│   │   └── .gitkeep          # Agar folder kosong ini ikut ke-push git
+│   ├── index.html            # Landing Page
+│   ├── register.html         # Halaman Register Multi-step
+│   ├── login.html            # Halaman Login
+│   ├── dashboard.html        # Halaman Dashboard Peserta
+│   └── admin.html            # Halaman Admin Panel
+│
+├── src/                      # [BACKEND] Logika server
+│   ├── config/               # Konfigurasi (Database, Multer, Nodemailer)
+│   │   └── multer.js         # Config upload file
+│   ├── controllers/          # Logika bisnis (Otak aplikasi)
+│   │   ├── authController.js
+│   │   ├── teamController.js
+│   │   └── adminController.js
+│   ├── middlewares/          # Pengecekan sebelum masuk controller
+│   │   ├── authMiddleware.js # Cek token login
+│   │   └── validator.js      # Validasi input (Zod)
+│   ├── routes/               # Definisi URL API
+│   │   ├── authRoutes.js
+│   │   ├── teamRoutes.js
+│   │   └── index.js
+│   ├── utils/                # Fungsi bantuan (Reusable)
+│   │   └── emailSender.js    # Logic kirim email
+│   └── app.js                # Entry point server Express
+│
+├── .env                      # Variabel rahasia (DB URL, JWT Secret)
+├── .gitignore                # List file yang tidak boleh masuk Git
+├── package.json              # Daftar library & script run
+├── tailwind.config.js        # Konfigurasi Tailwind
+└── input.css                 # [FRONTEND] Source CSS Tailwind
