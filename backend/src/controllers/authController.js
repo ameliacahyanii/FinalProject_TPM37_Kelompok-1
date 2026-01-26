@@ -9,6 +9,19 @@ const JWT_SECRET = process.env.JWT_SECRET || "ini_rahasia";
 // REGISTER
 const register = async (req, res) => {
 	try {
+		// Cek File Upload
+		// req.files berisi object array file yang diupload via multer
+		const files = req.files;
+		if (!files || !files["cvFile"] || !files["idCardFile"]) {
+			return res.status(400).json({
+				success: false,
+				errorr: "Wajib upload CV dan ID Card!",
+			});
+		}
+
+		const cvFileName = files["cvFile"][0].filename;
+		const idCardFileName = files["idCardFile"][0].filename;
+
 		const { name, password, fullName, email, whatsapp, lineId, githubId, birthPlace, birthDate } = req.body;
 
 		// ---- 1. Validasi Umur (minimal 17 tahun) ----
@@ -77,8 +90,8 @@ const register = async (req, res) => {
 						githubId,
 						birthPlace,
 						birthDate: birthDateObj,
-						cvUrl: "pending_upload.pdf",
-						idCardUrl: "pending_upload.pdf",
+						cvUrl: cvFileName,
+						idCardUrl: idCardFileName,
 						isBinusian: false, // default false
 					},
 				},
@@ -89,10 +102,14 @@ const register = async (req, res) => {
 		// kirim response sukses
 		res.status(201).json({
 			success: true,
-			message: "Registrasi berhasil.",
+			message: "Registrasi berhasil dengan file.",
 			data: {
 				teamName: newTeam.name,
 				leaderName: newTeam.leader.fullName,
+				files: {
+					cv: newTeam.leader.cvUrl,
+					idCard: newTeam.leader.idCardUrl,
+				},
 			},
 		});
 	} catch (error) {
