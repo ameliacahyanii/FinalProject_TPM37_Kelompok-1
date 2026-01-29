@@ -6,23 +6,27 @@ tailwind.config = {
         display: ["Changa", "Poppins", "sans-serif"],
       },
       colors: {
-        background: "#04081F",
-        surface: "#0B102F",
+        /* Base */
+        background: "#04081F", // body bg
+        surface: "#5C4DEC", // card, input, bubble soft
+        nav: "#27216A", // navbar & footer
 
+        /* Brand & Accent */
         brand: "#5C4DEC",
-        "brand-dark": "#2D28BB",
+        "brand-dark": "#27216A",
+        accent: "#F482FE",
 
-        heading: "#FBF2FF",
-        body: "#D7C4FF",
+        /* Text */
+        heading: "#FBF2FF", // title / heading
+        body: "#D7C4FF", // paragraph / icon
         muted: "#848199",
 
-        accent: "#F482FE",
-        "accent-soft": "#D7C4FF",
-
+        /* UI */
         border: "rgba(215,196,255,0.35)",
       },
       borderRadius: {
         base: "0.5rem",
+        lg: "0.75rem",
       },
     },
   },
