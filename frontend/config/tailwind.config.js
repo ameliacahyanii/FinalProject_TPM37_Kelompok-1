@@ -1,21 +1,25 @@
 tailwind.config = {
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Poppins", "ui-sans-serif", "system-ui"],
+        display: ["Changa", "Poppins", "sans-serif"],
+      },
       colors: {
-        background: "#F9FAFB",
+        background: "#04081F",
+        surface: "#0B102F",
 
-        brand: "#2563EB",
-        "brand-dark": "#1E40AF",
+        brand: "#5C4DEC",
+        "brand-dark": "#2D28BB",
 
-        heading: "#111827",
-        body: "#374151",
-        muted: "#6B7280",
+        heading: "#FBF2FF",
+        body: "#D7C4FF",
+        muted: "#848199",
 
-        "neutral-primary": "#FFFFFF",
-        "neutral-secondary-soft": "#F3F4F6",
-        "neutral-tertiary": "#E5E7EB",
+        accent: "#F482FE",
+        "accent-soft": "#D7C4FF",
 
-        "border-default": "#E5E7EB",
+        border: "rgba(215,196,255,0.35)",
       },
       borderRadius: {
         base: "0.5rem",
