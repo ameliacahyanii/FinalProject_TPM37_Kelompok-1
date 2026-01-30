@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
@@ -16,56 +16,211 @@
       href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
       rel="stylesheet"
     />
+
+    <!-- Main JS -->
+    <script src="./js/main.js" defer></script>
   </head>
 
-  <body class="bg-background text-body">
+  <body
+    class="min-h-screen text-body bg-[radial-gradient(circle_at_top_left,rgba(92,77,236,0.90),#04081F_20%)]"
+  >
     <div class="min-h-screen flex items-center justify-center px-4">
       <form
-        class="bg-neutral-primary p-8 rounded-base shadow w-full max-w-lg border border-border-default"
+        class="bg-neutral-primary p-8 rounded-base shadow w-full max-w-screen-lg border border-border-default mt-10 mb-10"
       >
-        <h2 class="text-2xl font-bold mb-6 text-heading text-center">
-          Registrasi Tim
-        </h2>
+        <!-- Step 1: Group Information -->
+        <section class="step grid grid-cols-2 gap-10">
+          <div>
+            <h2 class="text-4xl font-light text-heading text-left mb-2">
+              Register
+            </h2>
+            <p class="text-md font-light mb-3 top-0">Informasi Group</p>
+          </div>
+          <div>
+            <div class="mb-4">
+              <label class="block text-md font-light mb-1">Nama Group</label>
+              <input
+                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Nama Group |"
+              />
+            </div>
+            <div class="mb-4">
+              <label class="block text-md font-light mb-1">Password</label>
+              <input
+                type="password"
+                class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Password |"
+              />
+              <p class="text-sm font-light font mt-2 opacity-50">
+                > Minimal 8 Karakter <br />
+                > Menggunakan Lowercase dan Uppercase <br />
+                > Menggunakan Angka <br />
+                > Menggunakan Simbol Khusus <br />
+              </p>
+            </div>
+            <div class="mb-6">
+              <label class="block text-md font-light mb-1"
+                >Konfirmasi Password</label
+              >
+              <input
+                type="password"
+                class="w-full px-4 bg-transparent py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Ulangi Password"
+              />
+              <p class="text-sm font-light font mt-2 opacity-50">
+                > Harus sesuai dengan Password <br />
+              </p>
+            </div>
+            <div class="mb-6">
+              <label
+                for="binusian"
+                class="flex items-center gap-3 cursor-pointer"
+              >
+                <span class="text-md font-light">Binusian</span>
+                <input type="checkbox" id="binusian" class="peer hidden" />
+                <span
+                  class="w-5 h-5 rounded-full border-2 border-border-default flex items-center justify-center peer-checked:border-brand peer-checked:bg-brand transition"
+                >
+                  <span
+                    class="w-2.5 h-2.5 rounded-full bg-white scale-0 peer-checked:scale-100 transition"
+                  ></span>
+                </span>
+              </label>
+            </div>
 
-        <div class="mb-4">
-          <label class="block text-sm font-medium mb-1">Nama Tim</label>
-          <input
-            class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-            placeholder="Nama Tim"
-          />
-        </div>
+            <button class="bg-transparent border-solid border-2 p-1 rounded-full pr-5 pl-5 border-indigo-500 flex" type="button" onclick="nextStep()">Next Page</button>
+          </div>
+        </section>
 
-        <div class="mb-4">
-          <label class="block text-sm font-medium mb-1">Password</label>
-          <input
-            type="password"
-            class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-            placeholder="Password"
-          />
-        </div>
+        <!-- Step 2: Group Information -->
+        <section class="step hidden grid grid-cols-2 gap-10">
+          <div>
+            <h2 class="text-4xl font-light text-heading text-left mb-2">
+              Register
+            </h2>
+            <p class="text-md font-light mb-3 top-0">Informasi Leader</p>
+          </div>
 
-        <div class="mb-6">
-          <label class="block text-sm font-medium mb-1"
-            >Konfirmasi Password</label
-          >
-          <input
-            type="password"
-            class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-            placeholder="Ulangi Password"
-          />
-        </div>
+          <div>
+            <div class="mb-4">
+              <label class="block text-md font-light mb-1">Full Name</label>
+              <input
+                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Full Name |"
+              />
+            </div>
 
-        <a
-          href="./login.html"
-          class="block w-full text-center bg-brand text-white py-2 mb-4 rounded-base hover:bg-brand-dark transition font-medium"
-        >
-          Daftar
-        </a>
+            <div class="mb-4">
+              <label class="block text-md font-light mb-1">Email</label>
+              <input
+                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Email |"
+              />
+              <p class="text-sm font-light font mt-2 opacity-50">
+                > Pastikan Email Valid dan Mengandung  "@" <br />
+                > Email Harus Unik <br />
+              </p>
+            </div>
 
-        <p class="text-sm text-muted mt-4 text-center">
-          Sudah punya akun?
-          <a href="login.html" class="text-brand hover:underline"> Login </a>
-        </p>
+            <div class="mb-4">
+              <label class="block text-md font-light mb-1">Whatsapp Number</label>
+              <input
+                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Whatsapp Number |"
+              />
+              <p class="text-sm font-light font mt-2 opacity-50">
+                > Minimal 9 digit <br />
+                > Harus Nomor Whatsapp Unik <br />
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-md font-light mb-1">LINE ID</label>
+              <input
+                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="LINE ID |"
+              />
+              <p class="text-sm font-light font mt-2 opacity-50">
+                > LINE ID harus unik<br />
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-md font-light mb-1">Github/ Gitlab ID</label>
+              <input
+                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Github/ Gitlab ID |"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-md font-light mb-1">Birth Place</label>
+              <input
+                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Birth Place |"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-md font-light mb-1">Birth Date</label>
+              <input
+                type="date"
+                class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Birth Date |"
+              />
+              <p class="text-sm font-light font mt-2 opacity-50">
+                > Umur minimal 17 Tahun<br />
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-md font-light mb-1">Upload CV</label>
+              <input
+                type="file"
+                class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Upload CV |"
+              />
+              <p class="text-sm font-light font mt-2 opacity-50">
+                > Format file pdf, jpg, jpeg & png<br />
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-md font-light mb-1">Upload Flazz Card (Binusian)</label>
+              <input
+                type="file"
+                class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Upload Flazz Card |"
+              />
+              <p class="text-sm font-light font mt-2 opacity-50">
+                > Format file pdf, jpg, jpeg & png<br />
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-md font-light mb-1">Upload ID Card (Non- Binusian)</label>
+              <input
+                type="file"
+                class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Upload ID Card |"
+              />
+              <p class="text-sm font-light font mt-2 opacity-50">
+                > Format file pdf, jpg, jpeg & png<br />
+              </p>
+            </div>
+
+            <a
+              href="./login.html"
+              class="block w-full text-center bg-brand text-white py-2 mb-4 rounded-base hover:bg-brand-dark transition font-medium"
+            >
+              Daftar
+            </a>
+            <p class="text-sm text-muted mt-4 text-center">
+              Sudah punya akun?
+              <a href="login.html" class="text-brand hover:underline"> Login </a>
+            </p>
+          </div>
+        </section>
       </form>
     </div>
 
