@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
@@ -16,54 +16,82 @@
       href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
       rel="stylesheet"
     />
+
+    <!-- Main JS -->
+    <script src="./js/main.js" defer></script>
   </head>
 
-  <body class="bg-background text-body">
+  <body
+    class="min-h-screen text-body bg-[radial-gradient(circle_at_top_right,rgba(500,120,254,1),#04081F_20%)]"
+  >
     <div class="min-h-screen flex items-center justify-center px-4">
       <form
-        class="bg-neutral-primary p-8 rounded-base shadow w-full max-w-md border border-border-default"
+        class="relative p-12 rounded-2xl w-full max-w-screen-md mt-10 mb-10 bg-[rgba(39,33,106,1)]"
       >
-        <h2 class="text-2xl font-bold mb-6 text-center text-heading">
-          Login Tim
-        </h2>
-
-        <div class="mb-4">
-          <label class="block text-sm font-medium mb-1">Nama Tim</label>
-          <input
-            class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-            placeholder="Nama Tim"
-          />
-        </div>
-
-        <div class="mb-6">
-          <label class="block text-sm font-medium mb-1">Password</label>
-          <input
-            type="password"
-            class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-            placeholder="Password"
-          />
-        </div>
-
-        <a
-          href="./dashboard.html"
-          class="block w-full text-center bg-brand text-white py-2 mb-4 rounded-base hover:bg-brand-dark transition font-medium"
-        >
-          Login
-        </a>
-
-        <a
-          href="./admin/admin-login.html"
-          class="block w-full text-center bg-neutral-secondary-soft text-heading py-2 rounded-base border border-border-default hover:bg-neutral-tertiary transition font-medium"
-        >
-          Login as Admin
-        </a>
-
-        <p class="text-sm text-muted mt-4 text-center">
-          Belum punya akun?
-          <a href="register.html" class="text-brand hover:underline">
-            Daftar
-          </a>
+        <div
+          class="absolute -inset-3 blur-md bg-[rgba(39,33,106,1)] opacity-80 -z-10"
+        ></div>
+        <p id="errorText" class="mt-2 mb-5 text-red-500 hidden">
+          Pastikan untuk mengisi semua field telah diisi
         </p>
+        <div class="p-5 flex flex-col items-center">
+          <h2 class="text-3xl font-light text-heading text-center mb-5">
+            Login
+          </h2>
+
+          <div class="mb-6 w-full flex flex-col items-center">
+            <div class="w-9/12">
+              <label class="block text-sm font-medium mb-1 text-left">
+                Team Name
+              </label>
+              <input
+                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Nama Tim"
+                id="teamInput"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="mb-6 w-full flex flex-col items-center">
+            <div class="w-9/12">
+              <label class="block text-sm font-medium mb-1 text-left">
+                Password
+              </label>
+              <input
+                type="password"
+                class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Password"
+                id="passwordInput"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="flex gap-4 justify-center">
+            <!-- href="./dashboard.html" -->
+            <button
+              type="button"
+              class="bg-transparent border-2 rounded-full px-5 py-1 border-indigo-500 transition-all duration-300 hover:shadow-[0_0_12px_rgba(99,102,241,0.8)] hover:bg-indigo-500/10"
+              onclick="loginvalidate()"
+            >
+              Login
+            </button>
+            <a
+              href="./admin/admin-login.html"
+              class="bg-transparent border-2 rounded-full px-5 py-1 border-indigo-500 transition-all duration-300 hover:shadow-[0_0_12px_rgba(99,102,241,0.8)] hover:bg-indigo-500/10"
+            >
+              Login as Admin
+            </a>
+          </div>
+
+          <p class="text-sm text-muted mt-4 text-center">
+            Belum punya akun?
+            <a href="register.html" class="text-brand hover:underline">
+              Daftar
+            </a>
+          </p>
+        </div>
       </form>
     </div>
 

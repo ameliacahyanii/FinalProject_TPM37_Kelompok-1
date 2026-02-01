@@ -47,6 +47,7 @@ function validateStep() {
         emptyField.classList.add("hidden");
       }
     });
+    return isValid;
   });
   submitForm();
 }
@@ -66,9 +67,6 @@ document.querySelectorAll("input[required]").forEach((input) => {
   input.addEventListener("input", handler);
   input.addEventListener("change", handler);
 });
-
-
-
 
 // Password validation
 const passwordInput = document.getElementById("password");
@@ -222,3 +220,38 @@ function validateAge() {
 }
 
 birthdateInput.addEventListener("change", validateAge);
+
+// Login validation
+function loginvalidate() {
+  const teamInput = document.getElementById("teamInput");
+  const passwordInput = document.getElementById("passwordInput");
+  const errorText = document.getElementById("errorText");
+
+  const teamName = teamInput.value.trim();
+  const password = passwordInput.value.trim();
+
+  errorText.classList.add("hidden");
+  teamInput.classList.remove("border-red-500");
+  passwordInput.classList.remove("border-red-500");
+
+  let isValid = true;
+
+  if (!teamName) {
+    teamInput.classList.add("border-red-500");
+    isValid = false;
+  }
+
+  if (!password) {
+    passwordInput.classList.add("border-red-500");
+    isValid = false;
+  }
+
+  if (!isValid) {
+    errorText.classList.remove("hidden");
+    return;
+  }
+
+  // success
+  window.location.href = "./dashboard.html";
+}
+
