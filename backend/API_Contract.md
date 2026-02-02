@@ -116,26 +116,30 @@ The API is served at `http://localhost:3000` by default.
 - **Headers**:
     - `Authorization`: `Bearer <jwt_token>`
 - **Success Response** (200):
+
     ```json
     {
-      "success": true,
-      "message": "Berhasil mengambil data dashboard",
-      "data": {
-        "teamId": 1,
-        "name": "TeamAwesome",
-        "joinedAt": "2026-01-26T03:57:20.000Z",
-        "leader": {
-          "fullName": "John Doe",
-          "email": "john@example.com",
-          "whatsapp": "1234567890",
-          "lineId": "johndoe123",
-          "githubId": "johndoe",
-          "birthDate": "2000-01-01T00:00:00.000Z",
-          "cvUrl": "/uploads/cv_1234567890.pdf",
-          "idCardUrl": "/uploads/idcard_1234567890.jpg"
-      - 403: Token expired or invalid
-      - 404: Team not found
-      - 500: Server error
+    	"success": true,
+    	"message": "Berhasil mengambil data dashboard",
+    	"data": {
+    		"teamId": 1,
+    		"name": "TeamAwesome",
+    		"joinedAt": "2026-01-26T03:57:20.000Z",
+    		"leader": {
+    			"fullName": "John Doe",
+    			"email": "john@example.com",
+    			"whatsapp": "1234567890",
+    			"lineId": "johndoe123",
+    			"githubId": "johndoe",
+    			"birthDate": "2000-01-01T00:00:00.000Z",
+    			"cvUrl": "/uploads/cv_1234567890.pdf",
+    			"idCardUrl": "/uploads/idcard_1234567890.jpg"
+                - 403: Token expired or invalid
+                - 404: Team not found
+                - 500: Server error
+    		}
+    	}
+    }
     ```
 
 ### 6. Get All Participants (Admin)
@@ -157,26 +161,37 @@ The API is served at `http://localhost:3000` by default.
 - **Success Response** (200):
     ```json
     {
-      "success": true,
-      "data": [
-        {
-          "id": 1,
-          "teamName": "TeamAwesome",
-          "leaderName": "John Doe",
-          "email": "john@example.com",
-          "registeredAt": "2026-01-26T03:57:20.000Z",
-          "cvUrl": "/uploads/cv_1234567890.pdf",
-          "idCardUrl": "/uploads/idcard_1234567890.jpg"
-        },
-        {
-          "id": 2,
-          "teamName": "TeamB",
-          "leaderName": "Jane Smith",
-          "email": "jane@example.com",
-          "registeredAt": "2026-01-27T10:30:00.000Z",
-          "cvUrl": "/uploads/cv_0987654321.pdf",
-          "idCardUrl": "/uploads/idcard_0987654321.jpg"
+    	"success": true,
+    	"data": [
+    		{
+    			"id": 1,
+    			"teamName": "TeamAwesome",
+    			"leaderName": "John Doe",
+    			"email": "john@example.com",
+    			"registeredAt": "2026-01-26T03:57:20.000Z",
+    			"cvUrl": "/uploads/cv_1234567890.pdf",
+    			"idCardUrl": "/uploads/idcard_1234567890.jpg"
+    		},
+    		{
+    			"id": 2,
+    			"teamName": "TeamB",
+    			"leaderName": "Jane Smith",
+    			"email": "jane@example.com",
+    			"registeredAt": "2026-01-27T10:30:00.000Z",
+    			"cvUrl": "/uploads/cv_0987654321.pdf",
+    			"idCardUrl": "/uploads/idcard_0987654321.jpg"
+    		}
+    	]
+    }
     ```
+
+### 7. Delete Team (Admin)
+
+- **URL**: `DELETE /api/admin/teams/:id`
+- **Description**: Deletes a team and its associated leader data by team ID.
+- **Authentication**: Required (JWT token with admin role in Authorization header: `Bearer <token>`)
+- **Headers**:
+    - `Authorization`: `Bearer <jwt_token>`
 - **URL Parameters**:
     - `id` (integer): Team ID to delete
 - **Example**: `DELETE /api/admin/teams/1`
@@ -206,41 +221,13 @@ The API is served at `http://localhost:3000` by default.
 - **Request Body**:
     ```json
     {
-    	"teamName": "NewTeamName",
-    	"fullName": "New Full Name",
-    	"email": "newemail@example.com",
+    	"teamName": "UpdatedTeamName",
+    	"fullName": "Updated Full Name",
+    	"email": "updated@example.com",
     	"whatsapp": "987654321"
     }
     ```
 - **Example**: `PUT /api/admin/teams/1`
-- **Request Example** (curl):
-    ```bash
-    curl -X PUT http://localhost:3000/api/admin/teams/1 \
-      -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
-      -H "Content-Type: application/json" \
-      -d '{
-        "teamName": "UpdatedTeamName",
-        "fullName": "Updated Full Name",
-        "email": "updated@example.com",
-        "whatsapp": "987654321"
-      }'
-    ```
-- **Request Example** (JavaScript with fetch):
-    ```javascript
-    fetch("http://localhost:3000/api/admin/teams/1", {
-    	method: "PUT",
-    	headers: {
-    		Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-    		"Content-Type": "application/json",
-    	},
-    	body: JSON.stringify({
-    		teamName: "UpdatedTeamName",
-    		fullName: "Updated Full Name",
-    		email: "updated@example.com",
-    		whatsapp: "987654321",
-    	}),
-    });
-    ```
 - **Success Response** (200):
     ```json
     {
