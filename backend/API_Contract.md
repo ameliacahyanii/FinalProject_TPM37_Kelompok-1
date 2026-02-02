@@ -80,32 +80,38 @@ The API is served at `http://localhost:3000` by default.
     - 404: Invalid team name or password
     - 500: Server error
 
-## Data Models
+### 4. Get User Dashboard
 
-### Team
-
-- `id` (int): Primary key
-- `name` (string): Unique team name
-- `password` (string): Hashed password
-- `createdAt` (DateTime): Creation timestamp
-- `updatedAt` (DateTime): Update timestamp
-- `leader` (Leader): Associated leader
-
-### Leader
-
-- `id` (int): Primary key
-- `fullName` (string): Full name
-- `email` (string): Unique email
-- `whatsapp` (string): Unique WhatsApp number
-- `lineId` (string): Unique Line ID
-- `githubId` (string): GitHub ID
-- `birthPlace` (string): Birth place
-- `birthDate` (DateTime): Birth date
-- `cvUrl` (string): CV file path
-- `idCardUrl` (string): ID card file path
-- `isBinusian` (boolean): Whether the leader is a Binusian
-- `teamId` (int): Foreign key to Team
-- `team` (Team): Associated team
+- **URL**: `GET /api/team/me`
+- **Description**: Retrieves the authenticated team's dashboard data, including team and leader information.
+- **Authentication**: Required (JWT token in Authorization header: `Bearer <token>`)
+- **Success Response** (200):
+    ```json
+    {
+    	"success": true,
+    	"message": "Berhasil mengambil data dashboard",
+    	"data": {
+    		"teamId": 1,
+    		"name": "TeamName",
+    		"joinedAt": "2026-01-26T03:57:20.000Z",
+    		"leader": {
+    			"fullName": "Full Name",
+    			"email": "email@example.com",
+    			"whatsapp": "123456789",
+    			"lineId": "lineid",
+    			"githubId": "githubid",
+    			"birthDate": "2000-01-01T00:00:00.000Z",
+    			"cvUrl": "/uploads/filename.pdf",
+    			"idCardUrl": "/uploads/filename.jpg"
+    		}
+    	}
+    }
+    ```
+- **Error Responses**:
+    - 401: Missing or invalid token
+    - 403: Token expired or invalid
+    - 404: Team not found
+    - 500: Server error
 
 ### Admin
 
@@ -120,5 +126,6 @@ Static files are served from the `/public` directory at the root URL.
 ## Authentication
 
 - JWT tokens are issued upon successful login.
-- Include the token in the `Authorization` header as `Bearer <token>` for protected routes (none currently implemented).</content>
+- Include the token in the `Authorization` header as `Bearer <token>` for protected routes.
+- Protected routes: `/api/team/me`</content>
   <parameter name="filePath">d:\Coding\BNCC_TPM_Final_Project\FinalProject_TPM37_Kelompok-1\backend\API_Contract.md
