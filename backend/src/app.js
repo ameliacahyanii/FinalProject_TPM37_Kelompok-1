@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
 const authRoutes = require("./routes/authRoutes"); // import routes
+const teamRoutes = require("./routes/teamRoutes"); // import team routes
 
 // load env variables dari .env
 dotenv.config();
@@ -21,6 +22,7 @@ app.use(express.static(path.join(__dirname, "../public"))); // biar bisa akses f
 
 // --- routes ---
 app.use("/api/auth", authRoutes);
+app.use("/api/team", teamRoutes);
 
 // basic route
 app.get("/", (req, res) => {
