@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const path = require("path");
 const authRoutes = require("./routes/authRoutes"); // import routes
 const teamRoutes = require("./routes/teamRoutes"); // import team routes
+const adminRoutes = require("./routes/adminRoutes"); // import admin routes
 
 // load env variables dari .env
 dotenv.config();
@@ -23,7 +24,7 @@ app.use(express.static(path.join(__dirname, "../public"))); // biar bisa akses f
 // --- routes ---
 app.use("/api/auth", authRoutes);
 app.use("/api/team", teamRoutes);
-
+app.use("/api/admin", adminRoutes);
 // basic route
 app.get("/", (req, res) => {
 	res.json({ message: "Hackathon 2025 Backend API" });

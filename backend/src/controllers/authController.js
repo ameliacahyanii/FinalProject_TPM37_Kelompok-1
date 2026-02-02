@@ -181,7 +181,53 @@ const login = async (req, res) => {
 	}
 };
 
+// login khusus admin
+const adminLogin = async (req, res) => {
+	try {
+		const { username, password } = req.body;
+
+		// cari di tabel Admin
+		const admin = await prisma.admin.findUnique({
+			where: { username },
+		});
+		if (!admin) {
+			return res.status(401).json({
+				success: false,
+				error: "Admin tidak ditemukan!",
+			});
+		}
+
+		// cek password
+		const isMatch = await bcrypt.compare(password, admin.password);
+		if (!isMatch) {
+			return res.status(401).json({
+				success: false,
+				error: "Password salah!",
+			});
+		}
+
+		// buat token untuk admin
+		const token = jwt.sign(
+			{ id: admin.id, role: "admin" }, // Payload beda role
+			JWT_SECRET,
+			{ expiresIn: "1d" },
+		);
+
+		// response sukses
+		res.json({
+			success: true,
+			message: "Welcome Admin!",
+			token: token,
+			role: "admin",
+		});
+	} catch (error) {
+		console.error("Admin Login Error:", error);
+		res.status(500).json({ success: false, error: "Server Error" });
+	}
+};
+
 module.exports = {
 	register,
 	login,
+	adminLogin,
 };

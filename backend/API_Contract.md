@@ -36,17 +36,31 @@ The API is served at `http://localhost:3000` by default.
     - `birthDate` (string, required): Leader's birth date (YYYY-MM-DD format, age >= 17)
     - `cvFile` (file, required): CV file (PDF/JPG/PNG)
     - `idCardFile` (file, required): ID card file (PDF/JPG/PNG)
+- **Request Example** (form-data):
+    ```
+    name=TeamAwesome
+    password=Password123!
+    fullName=John Doe
+    email=john@example.com
+    whatsapp=1234567890
+    lineId=johndoe123
+    githubId=johndoe
+    birthPlace=Jakarta
+    birthDate=2000-01-01
+    cvFile=<CV_FILE>
+    idCardFile=<ID_CARD_FILE>
+    ```
 - **Success Response** (201):
     ```json
     {
     	"success": true,
     	"message": "Registrasi berhasil dengan file.",
     	"data": {
-    		"teamName": "TeamName",
-    		"leaderName": "Full Name",
+    		"teamName": "TeamAwesome",
+    		"leaderName": "John Doe",
     		"files": {
-    			"cv": "filename.pdf",
-    			"idCard": "filename.jpg"
+    			"cv": "cv_1234567890.pdf",
+    			"idCard": "idcard_1234567890.jpg"
     		}
     	}
     }
@@ -63,69 +77,200 @@ The API is served at `http://localhost:3000` by default.
 - **Request Body**:
     ```json
     {
-    	"name": "teamname",
-    	"password": "password"
+    	"name": "TeamAwesome",
+    	"password": "Password123!"
+    }
+    ```
+- **Success Response** (200):
+    ```json
+    {
+      "success": true,
+      "message": "Login berhasil.",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    ```
+- **Request Body**:
+    ```json
+    {
+    	"username": "admin",
+    	"password": "adminpass123"
     }
     ```
 - **Success Response** (200):
     ```json
     {
     	"success": true,
-    	"message": "Login berhasil.",
+    	"message": "Welcome Admin!",
     	"token": "jwt_token_here",
-    	"role": "participant"
+    	"role": "admin"
     }
     ```
 - **Error Responses**:
-    - 404: Invalid team name or password
+    - 401: Invalid username or password
     - 500: Server error
 
-### 4. Get User Dashboard
+### 5. Get User Dashboard
 
 - **URL**: `GET /api/team/me`
 - **Description**: Retrieves the authenticated team's dashboard data, including team and leader information.
 - **Authentication**: Required (JWT token in Authorization header: `Bearer <token>`)
+- **Headers**:
+    - `Authorization`: `Bearer <jwt_token>`
+- **Success Response** (200):
+    ```json
+    {
+      "success": true,
+      "message": "Berhasil mengambil data dashboard",
+      "data": {
+        "teamId": 1,
+        "name": "TeamAwesome",
+        "joinedAt": "2026-01-26T03:57:20.000Z",
+        "leader": {
+          "fullName": "John Doe",
+          "email": "john@example.com",
+          "whatsapp": "1234567890",
+          "lineId": "johndoe123",
+          "githubId": "johndoe",
+          "birthDate": "2000-01-01T00:00:00.000Z",
+          "cvUrl": "/uploads/cv_1234567890.pdf",
+          "idCardUrl": "/uploads/idcard_1234567890.jpg"
+      - 403: Token expired or invalid
+      - 404: Team not found
+      - 500: Server error
+    ```
+
+### 6. Get All Participants (Admin)
+
+- **URL**: `GET /api/admin/participants`
+- **Description**: Retrieves a list of all registered teams with their leader information. Supports search and sorting.
+- **Authentication**: Required (JWT token with admin role in Authorization header: `Bearer <token>`)
+- **Headers**:
+    - `Authorization`: `Bearer <jwt_token>`
+- **Query Parameters** (optional):
+    - `search` (string): Search teams by name (partial match)
+    - `sortBy` (string): Sort by 'name' or default 'createdAt'
+    - `order` (string): Sort order 'asc' or 'desc' (for name), or 'oldest' for createdAt
+- **Example URLs**:
+    - `GET /api/admin/participants`
+    - `GET /api/admin/participants?search=tim`
+    - `GET /api/admin/participants?sortBy=name&order=asc`
+    - `GET /api/admin/participants?search=team&sortBy=name&order=desc`
+- **Success Response** (200):
+    ```json
+    {
+      "success": true,
+      "data": [
+        {
+          "id": 1,
+          "teamName": "TeamAwesome",
+          "leaderName": "John Doe",
+          "email": "john@example.com",
+          "registeredAt": "2026-01-26T03:57:20.000Z",
+          "cvUrl": "/uploads/cv_1234567890.pdf",
+          "idCardUrl": "/uploads/idcard_1234567890.jpg"
+        },
+        {
+          "id": 2,
+          "teamName": "TeamB",
+          "leaderName": "Jane Smith",
+          "email": "jane@example.com",
+          "registeredAt": "2026-01-27T10:30:00.000Z",
+          "cvUrl": "/uploads/cv_0987654321.pdf",
+          "idCardUrl": "/uploads/idcard_0987654321.jpg"
+    ```
+- **URL Parameters**:
+    - `id` (integer): Team ID to delete
+- **Example**: `DELETE /api/admin/teams/1`
 - **Success Response** (200):
     ```json
     {
     	"success": true,
-    	"message": "Berhasil mengambil data dashboard",
-    	"data": {
-    		"teamId": 1,
-    		"name": "TeamName",
-    		"joinedAt": "2026-01-26T03:57:20.000Z",
-    		"leader": {
-    			"fullName": "Full Name",
-    			"email": "email@example.com",
-    			"whatsapp": "123456789",
-    			"lineId": "lineid",
-    			"githubId": "githubid",
-    			"birthDate": "2000-01-01T00:00:00.000Z",
-    			"cvUrl": "/uploads/filename.pdf",
-    			"idCardUrl": "/uploads/filename.jpg"
-    		}
-    	}
+    	"message": "Tim berhasil dihapus!"
     }
     ```
 - **Error Responses**:
+    - 400: Team ID not found or invalid
     - 401: Missing or invalid token
-    - 403: Token expired or invalid
-    - 404: Team not found
+    - 403: Insufficient permissions (not admin)
     - 500: Server error
 
-### Admin
+### 8. Edit Team (Admin)
 
-- `id` (int): Primary key
-- `username` (string): Unique username
-- `password` (string): Password
+- **URL**: `PUT /api/admin/teams/:id`
+- **Description**: Updates team and leader information for a specific team.
+- **Authentication**: Required (JWT token with admin role in Authorization header: `Bearer <token>`)
+- **Headers**:
+    - `Authorization`: `Bearer <jwt_token>`
+- **Content-Type**: `application/json`
+- **URL Parameters**:
+    - `id` (integer): Team ID to update
+- **Request Body**:
+    ```json
+    {
+    	"teamName": "NewTeamName",
+    	"fullName": "New Full Name",
+    	"email": "newemail@example.com",
+    	"whatsapp": "987654321"
+    }
+    ```
+- **Example**: `PUT /api/admin/teams/1`
+- **Request Example** (curl):
+    ```bash
+    curl -X PUT http://localhost:3000/api/admin/teams/1 \
+      -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
+      -H "Content-Type: application/json" \
+      -d '{
+        "teamName": "UpdatedTeamName",
+        "fullName": "Updated Full Name",
+        "email": "updated@example.com",
+        "whatsapp": "987654321"
+      }'
+    ```
+- **Request Example** (JavaScript with fetch):
+    ```javascript
+    fetch("http://localhost:3000/api/admin/teams/1", {
+    	method: "PUT",
+    	headers: {
+    		Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    		"Content-Type": "application/json",
+    	},
+    	body: JSON.stringify({
+    		teamName: "UpdatedTeamName",
+    		fullName: "Updated Full Name",
+    		email: "updated@example.com",
+    		whatsapp: "987654321",
+    	}),
+    });
+    ```
+- **Success Response** (200):
+    ```json
+    {
+    	"success": true,
+    	"message": "Data Tim dan Peserta berhasil diupdate."
+    }
+    ```
+- **Error Responses**:
+    - 400: Invalid data, duplicate team name/email, or team ID not found
+    - 401: Missing or invalid token
+    - 403: Insufficient permissions (not admin)
+    - 500: Server error
+
+## Authentication
+
+- JWT tokens are issued upon successful login for both participants and admins.
+- Include the token in the `Authorization` header as `Bearer <token>` for protected routes.
+- **Participant routes** (require participant role): `/api/team/me`
+- **Admin routes** (require admin role): `/api/admin/*`
 
 ## Static Files
 
 Static files are served from the `/public` directory at the root URL.
 
-## Authentication
+- Uploaded CV and ID card files are accessible at `/uploads/filename.ext`
+- Example: `http://localhost:3000/uploads/cv.pdf`
 
-- JWT tokens are issued upon successful login.
-- Include the token in the `Authorization` header as `Bearer <token>` for protected routes.
-- Protected routes: `/api/team/me`</content>
-  <parameter name="filePath">d:\Coding\BNCC_TPM_Final_Project\FinalProject_TPM37_Kelompok-1\backend\API_Contract.md
+## File Upload Requirements
+
+- **CV File**: PDF, JPG, or PNG format
+- **ID Card File**: PDF, JPG, or PNG format
+- Maximum file size: Configured in multer settings (default: 5MB per file)
+- Files are stored in `backend/public/uploads/` directory
