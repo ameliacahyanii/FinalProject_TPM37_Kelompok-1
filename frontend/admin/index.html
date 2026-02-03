@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel - Participant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-[#05060b] text-white overflow-hidden">
+
+  <!-- BACKGROUND GLOW -->
+  <div class="absolute -top-48 left-1/2 -translate-x-1/2
+              w-[720px] h-[720px] rounded-full bg-blue-600/30 blur-[180px]"></div>
+
+  <div class="absolute bottom-[-220px] right-[-220px]
+              w-[620px] h-[620px] rounded-full bg-indigo-500/25 blur-[180px]"></div>
+
+  <!-- FULL PANEL -->
+  <div class="relative z-10 min-h-screen px-20 py-12">
+
+    <!-- TITLE -->
+    <h1 class="text-3xl font-semibold text-center mb-10">
+      Participant
+    </h1>
+
+    <!-- SEARCH + SORT -->
+    <div class="flex gap-6 mb-10">
+      <!-- Search -->
+      <div class="relative flex-1">
+        <span class="absolute left-5 top-1/2 -translate-y-1/2 text-white/50">
+          🔍
+        </span>
+        <input
+          type="text"
+          placeholder="Search"
+          class="w-full h-12 rounded-full bg-white/15 pl-12 pr-6
+                 placeholder-white/50 outline-none"
+        />
+      </div>
+
+      <!-- Sort -->
+      <div class="flex items-center h-12 px-6 rounded-full bg-white/15 text-white/70">
+        Sort by
+        <span class="ml-2">▾</span>
+      </div>
+    </div>
+
+    <!-- TABLE PANEL -->
+    <div class="rounded-2xl bg-white/10 backdrop-blur-xl px-2">
+
+      <!-- HEADER -->
+      <div class="grid grid-cols-[2fr_2fr_1fr] px-10 py-5
+                  text-white/70 border-b border-white/20 text-sm">
+        <div>Team Name</div>
+        <div>Registration Date</div>
+        <div class="text-center">Action</div>
+      </div>
+
+      <!-- ROW -->
+      <div class="grid grid-cols-[2fr_2fr_1fr] px-10 py-5
+                  border-b border-white/10 text-sm">
+        <div>Ackerman</div>
+        <div>03 May 2025</div>
+        <div class="flex justify-center gap-4">
+          👁️ ✏️ 🗑️
+        </div>
+      </div>
+
+      <div class="grid grid-cols-[2fr_2fr_1fr] px-10 py-5
+                  border-b border-white/10 text-sm">
+        <div>Nielman</div>
+        <div>06 May 2025</div>
+        <div class="flex justify-center gap-4">
+          👁️ ✏️ 🗑️
+        </div>
+      </div>
+
+      <div class="grid grid-cols-[2fr_2fr_1fr] px-10 py-5
+                  border-b border-white/10 text-sm">
+        <div>Telemoth</div>
+        <div>10 May 2025</div>
+        <div class="flex justify-center gap-4">
+          👁️ ✏️ 🗑️
+        </div>
+      </div>
+
+      <div class="grid grid-cols-[2fr_2fr_1fr] px-10 py-5
+                  border-b border-white/10 text-sm">
+        <div>Avenir</div>
+        <div>11 May 2025</div>
+        <div class="flex justify-center gap-4">
+          👁️ ✏️ 🗑️
+        </div>
+      </div>
+
+      <div class="grid grid-cols-[2fr_2fr_1fr] px-10 py-5 text-sm">
+        <div>Ophelia</div>
+        <div>20 May 2025</div>
+        <div class="flex justify-center gap-4">
+          👁️ ✏️ 🗑️
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
