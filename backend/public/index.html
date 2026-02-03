@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="id">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Hackathon 2025</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body class="bg-gray-100 text-gray-800">
+		<nav class="bg-blue-600 p-4 text-white flex justify-between">
+			<h1 class="font-bold text-xl">Hackathon 2025</h1>
+			<div>
+				<a
+					href="login.html"
+					class="mr-4 hover:underline"
+					>Login Peserta</a
+				>
+				<a
+					href="#contact"
+					class="bg-white text-blue-600 px-3 py-1 rounded"
+					>Contact Us</a
+				>
+			</div>
+		</nav>
+
+		<header class="text-center py-20">
+			<h2 class="text-4xl font-bold mb-4">Bergabunglah dalam Inovasi!</h2>
+			<p class="mb-6">Daftarkan timmu sekarang dan menangkan hadiah total puluhan juta.</p>
+			<button class="bg-blue-600 text-white px-6 py-2 rounded-lg">Daftar Sekarang</button>
+		</header>
+
+		<section
+			id="contact"
+			class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md mb-20">
+			<h3 class="text-2xl font-bold mb-4 text-center">Hubungi Kami</h3>
+
+			<form
+				id="contactForm"
+				class="space-y-4">
+				<div>
+					<label class="block text-sm font-bold mb-1">Nama</label>
+					<input
+						type="text"
+						id="name"
+						class="w-full border p-2 rounded"
+						placeholder="Nama Kamu" />
+				</div>
+				<div>
+					<label class="block text-sm font-bold mb-1">Email</label>
+					<input
+						type="email"
+						id="email"
+						class="w-full border p-2 rounded"
+						placeholder="email@contoh.com" />
+				</div>
+				<div>
+					<label class="block text-sm font-bold mb-1">Subject</label>
+					<input
+						type="text"
+						id="subject"
+						class="w-full border p-2 rounded"
+						placeholder="Tanya Lomba" />
+				</div>
+				<div>
+					<label class="block text-sm font-bold mb-1">Pesan</label>
+					<textarea
+						id="message"
+						rows="4"
+						class="w-full border p-2 rounded"
+						placeholder="Tulis pesanmu..."></textarea>
+				</div>
+
+				<button
+					type="submit"
+					id="btnSubmit"
+					class="w-full bg-blue-600 text-white py-2 rounded font-bold hover:bg-blue-700">
+					Kirim Pesan
+				</button>
+			</form>
+		</section>
+
+		<script>
+			const contactForm = document.getElementById("contactForm");
+			const btnSubmit = document.getElementById("btnSubmit");
+
+			contactForm.addEventListener("submit", async (e) => {
+				e.preventDefault(); // Mencegah reload halaman
+
+				// 1. Ubah tombol jadi Loading
+				const originalText = btnSubmit.innerText;
+				btnSubmit.innerText = "Mengirim...";
+				btnSubmit.disabled = true;
+
+				// 2. Ambil data form
+				const data = {
+					name: document.getElementById("name").value,
+					email: document.getElementById("email").value,
+					subject: document.getElementById("subject").value,
+					message: document.getElementById("message").value,
+				};
+
+				try {
+					// 3. Tembak API Backend
+					const response = await fetch("/api/contact", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(data),
+					});
+
+					const result = await response.json();
+
+					if (result.success) {
+						alert("✅ Sukses: " + result.message);
+						contactForm.reset(); // Kosongkan form
+					} else {
+						alert("❌ Gagal: " + result.error);
+					}
+				} catch (err) {
+					console.error(err);
+					alert("Terjadi kesalahan koneksi!");
+				} finally {
+					// 4. Kembalikan tombol
+					btnSubmit.innerText = originalText;
+					btnSubmit.disabled = false;
+				}
+			});
+		</script>
+	</body>
+</html>
