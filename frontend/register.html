@@ -52,6 +52,7 @@
               <input
                 class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
                 placeholder="Nama Group |"
+                id="name"
                 required
               />
             </div>
@@ -149,6 +150,7 @@
               <input
                 class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
                 placeholder="Full Name |"
+                id="fullName"
                 required
               />
             </div>
@@ -195,6 +197,7 @@
               <input
                 class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
                 placeholder="LINE ID |"
+                id="lineID"
                 required
               />
               <p class="text-sm font-light font mt-2 opacity-50">
@@ -209,6 +212,7 @@
               <input
                 class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
                 placeholder="Github/ Gitlab ID |"
+                id="githubId"
                 required
               />
             </div>
@@ -220,6 +224,7 @@
               <input
                 class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
                 placeholder="Birth Place |"
+                id="birthPlace"
                 required
               />
             </div>
@@ -250,10 +255,18 @@
                 type="file"
                 class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
                 placeholder="Upload CV |"
+                id="cvFile"
                 required
               />
               <p class="text-sm font-light font mt-2 opacity-50">
                 > Format file pdf, jpg, jpeg & png<br />
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p class="text-sm font-light font mt-2 text-red-500">
+                !! Binusian harus mengunggah KTM Flazz Card, sedangkan
+                Non-Binusian mengunggah KTM !! <br />
               </p>
             </div>
 
@@ -265,6 +278,7 @@
                 type="file"
                 class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
                 placeholder="Upload Flazz Card |"
+                id="idCardFile"
               />
               <p class="text-sm font-light font mt-2 opacity-50">
                 > Format file pdf, jpg, jpeg & png<br />
@@ -279,6 +293,7 @@
                 type="file"
                 class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
                 placeholder="Upload ID Card |"
+                id="idCardFile"
               />
               <p class="text-sm font-light font mt-2 opacity-50">
                 > Format file pdf, jpg, jpeg & png<br />
@@ -310,5 +325,10 @@
 
     <!-- Flowbite JS -->
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
+    <!-- JS Links -->
+    <script src="./js/api.js" defer></script>
+    <script src="./js/auth.js" defer></script>
+    <script src="./js/main.js" defer></script>
   </body>
 </html>

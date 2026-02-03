@@ -69,7 +69,7 @@ document.querySelectorAll("input[required]").forEach((input) => {
 });
 
 // Password validation
-const passwordInput = document.getElementById("password");
+const passwordInput = document.getElementById("password"); // register password input, not login
 const passwordError = document.getElementById("passwordError");
 
 passwordInput.addEventListener("input", () => {
@@ -252,6 +252,6 @@ function loginvalidate() {
   }
 
   // success
-  window.location.href = "./dashboard.html";
+  loginController(teamName, password);
 }
 
