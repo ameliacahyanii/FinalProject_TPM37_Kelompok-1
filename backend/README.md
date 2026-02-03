@@ -80,6 +80,207 @@ model Admin {
 
 ---
 
+## 3.1. Contact Us / Email Feature
+
+The application includes a Contact Us form that allows visitors to send inquiries directly to the organizers.
+
+### **Files Involved:**
+
+1. **Controller:** `src/controllers/generalController.js`
+    - Function: `contactUs(req, res)`
+    - Handles form submission and email sending
+
+2. **Route:** `src/routes/generalRoutes.js`
+    - Endpoint: `POST /api/contact`
+    - Public endpoint (no authentication required)
+
+3. **Frontend:** `public/index.html`
+    - Contact form with fields: name, email, subject, message
+    - Client-side validation and API integration
+
+### **How It Works:**
+
+1. User fills out the contact form on the homepage
+2. Form submits data to `POST /api/contact` endpoint
+3. Backend validates all required fields (name, email, subject, message)
+4. Nodemailer sends email via SMTP
+5. Response sent back to user with success/error message
+
+### **Configuration Required:**
+
+Add these to your `.env` file:
+
+```env
+# Email Configuration (for Contact Us form)
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_specific_password
+EMAIL_TO=cio@bncc.net
+EMAIL_FROM=noreply@hackathon2025.com
+```
+
+### **Using Gmail SMTP:**
+
+1. **Enable 2-Factor Authentication:**
+    - Go to your Google Account settings
+    - Navigate to Security → 2-Step Verification
+    - Enable 2FA
+
+2. **Generate App Password:**
+    - Visit: https://myaccount.google.com/apppasswords
+    - Select "Mail" and "Other (Custom name)"
+    - Name it "Hackathon Contact Form"
+    - Copy the 16-character password
+    - Use this password in `EMAIL_PASS` (no spaces)
+
+3. **Update `.env`:**
+    ```env
+    EMAIL_USER=your.email@gmail.com
+    EMAIL_PASS=abcd efgh ijkl mnop  # Your 16-char app password
+    ```
+
+### **Using Other SMTP Providers:**
+
+**SendGrid:**
+
+```env
+EMAIL_HOST=smtp.sendgrid.net
+EMAIL_PORT=587
+EMAIL_USER=apikey
+EMAIL_PASS=your_sendgrid_api_key
+```
+
+**Mailgun:**
+
+```env
+EMAIL_HOST=smtp.mailgun.org
+EMAIL_PORT=587
+EMAIL_USER=postmaster@your-domain.mailgun.org
+EMAIL_PASS=your_mailgun_password
+```
+
+**Outlook/Hotmail:**
+
+```env
+EMAIL_HOST=smtp-mail.outlook.com
+EMAIL_PORT=587
+EMAIL_USER=your_email@outlook.com
+EMAIL_PASS=your_password
+```
+
+### **Testing Email Feature:**
+
+**Development Mode (Using Ethereal):**
+The controller uses nodemailer's test account for development:
+
+```bash
+# Start server
+npm run dev
+
+# Submit contact form
+# Check terminal output for "Preview URL"
+# Click the URL to see the email in Ethereal's inbox
+```
+
+**Production Mode (Using Real SMTP):**
+Update `generalController.js` to use environment variables:
+
+```javascript
+const transporter = nodemailer.createTransport({
+	host: process.env.EMAIL_HOST,
+	port: process.env.EMAIL_PORT,
+	secure: false,
+	auth: {
+		user: process.env.EMAIL_USER,
+		pass: process.env.EMAIL_PASS,
+	},
+});
+
+await transporter.sendMail({
+	from: `"${name}" <${process.env.EMAIL_FROM}>`,
+	to: process.env.EMAIL_TO,
+	subject: `[Contact Us] ${subject}`,
+	text: message,
+	html: `...`,
+});
+```
+
+### **API Endpoint Details:**
+
+**Request:**
+
+```http
+POST /api/contact
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "subject": "Question about Hackathon",
+  "message": "When does the registration close?"
+}
+```
+
+**Success Response (200):**
+
+```json
+{
+	"success": true,
+	"message": "Pesan berhasil dikirim! Cek terminal server untuk link preview."
+}
+```
+
+**Error Response (400):**
+
+```json
+{
+	"success": false,
+	"error": "Semua field wajib diisi!"
+}
+```
+
+**Error Response (500):**
+
+```json
+{
+	"success": false,
+	"error": "Gagal mengirim email."
+}
+```
+
+### **Troubleshooting Email Issues:**
+
+**Issue: "Invalid login" or "Authentication failed"**
+
+- Gmail: Use App Password, not regular password
+- Verify EMAIL_USER and EMAIL_PASS are correct
+- Check if 2FA is enabled (required for Gmail)
+
+**Issue: "Connection timeout"**
+
+- Check firewall settings
+- Verify EMAIL_HOST and EMAIL_PORT
+- Try using port 465 (secure) instead of 587
+
+**Issue: "Email not received"**
+
+- Check spam/junk folder
+- Verify EMAIL_TO address is correct
+- Check SMTP provider's sending limits
+- View email logs in your SMTP provider dashboard
+
+**Issue: "self signed certificate" error**
+Add to transporter config:
+
+```javascript
+tls: {
+	rejectUnauthorized: false;
+}
+```
+
+---
+
 ## 4. Complete Setup Guide
 
 ### 🔧 Prerequisites (Must Install First)
@@ -414,11 +615,22 @@ backend/
 │   ├── schema.prisma      ✅
 │   └── seed.js            ✅
 ├── public/
-│   └── uploads/           ✅ (Created in Step 9)
+│   ├── uploads/           ✅ (Created in Step 9)
+│   └── index.html         ✅ (Contact Us form)
 ├── src/
 │   ├── app.js
 │   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── teamController.js
+│   │   ├── adminController.js
+│   │   ├── viewController.js
+│   │   └── generalController.js  ✅ (Contact Us email)
 │   ├── routes/
+│   │   ├── authRoutes.js
+│   │   ├── teamRoutes.js
+│   │   ├── adminRoutes.js
+│   │   ├── viewRoutes.js
+│   │   └── generalRoutes.js      ✅ (Contact endpoint)
 │   ├── middlewares/
 │   └── config/
 ├── views/                 ✅ (EJS templates)
@@ -512,6 +724,20 @@ npx prisma studio
 2. Use team name and password from registration
 3. Should redirect to team dashboard
 4. Verify all data displays correctly
+
+#### 6. Test Contact Us Form
+
+1. Visit: http://localhost:3000/ (homepage)
+2. Scroll to "Hubungi Kami" section
+3. Fill out all fields:
+    - Nama: Your name
+    - Email: Valid email address
+    - Subject: Test message
+    - Pesan: Your inquiry
+4. Click "Kirim Pesan"
+5. Should see success message
+6. **Development mode:** Check terminal for "Preview URL" link
+7. **Production mode:** Check EMAIL_TO inbox for received email
 
 ---
 
