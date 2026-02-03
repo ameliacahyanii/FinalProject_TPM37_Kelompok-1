@@ -241,12 +241,58 @@ The API is served at `http://localhost:3000` by default.
     - 403: Insufficient permissions (not admin)
     - 500: Server error
 
+### 9. Contact Us
+
+- **URL**: `POST /api/contact`
+- **Description**: Sends a contact inquiry email to the organizers. Public endpoint (no authentication required).
+- **Content-Type**: `application/json`
+- **Request Body**:
+    ```json
+    {
+    	"name": "John Doe",
+    	"email": "john@example.com",
+    	"subject": "Question about Hackathon",
+    	"message": "When does the registration close?"
+    }
+    ```
+- **Success Response** (200):
+    ```json
+    {
+    	"success": true,
+    	"message": "Pesan berhasil dikirim! Cek terminal server untuk link preview."
+    }
+    ```
+- **Error Responses**:
+    - **400 Bad Request**: Missing required fields
+        ```json
+        {
+        	"success": false,
+        	"error": "Semua field wajib diisi!"
+        }
+        ```
+    - **500 Internal Server Error**: Email sending failed
+        ```json
+        {
+        	"success": false,
+        	"error": "Gagal mengirim email."
+        }
+        ```
+
 ## Authentication
 
 - JWT tokens are issued upon successful login for both participants and admins.
 - Include the token in the `Authorization` header as `Bearer <token>` for protected routes.
-- **Participant routes** (require participant role): `/api/team/me`
-- **Admin routes** (require admin role): `/api/admin/*`
+- **Public routes** (no authentication required): 
+  - `POST /api/auth/register` - Team registration
+  - `POST /api/auth/login` - Team login
+  - `POST /api/auth/admin-login` - Admin login
+  - `POST /api/contact` - Contact Us form
+- **Participant routes** (require participant role): 
+  - `GET /api/team/me` - View own dashboard
+- **Admin routes** (require admin role): 
+  - `GET /api/admin/participants` - List all participants
+  - `DELETE /api/admin/teams/:id` - Delete team
+  - `PUT /api/admin/teams/:id` - Edit team
 
 ## Static Files
 
