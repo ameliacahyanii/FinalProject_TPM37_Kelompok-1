@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teams Admin Panel</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/admin.css" />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../config/tailwind.config.js"></script>
+
+    <!-- Flowbite CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Changa:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+
+  <body
+    class="min-h-screen p-4 md:p-12 bg-background relative overflow-x-hidden"
+  >
+    <div class="max-w-6xl mx-auto">
+      <!-- Gradient Backgrounds -->
+      <div
+        class="absolute top-[-100px] right-[-100px] w-64 h-64 sm:w-80 sm:h-80 lg:w-[400px] lg:h-[500px] rounded-full bg-accent/30 blur-[100px]"
+      ></div>
+
+      <div
+        class="absolute bottom-0 left-1/4 -translate-x-1/2 w-64 h-64 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[600px] rounded-full bg-brand/30 blur-[120px] animate-pulse"
+      ></div>
+
+      <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <h1
+          class="text-4xl md:text-5xl font-medium text-heading text-center mb-8 md:mb-12"
+        >
+          Participant
+        </h1>
+
+        <!-- Toolbar -->
+        <div class="flex flex-col md:flex-row gap-4 mb-6">
+          <!-- Search -->
+          <div class="relative flex-1">
+            <div
+              class="pointer-events-none absolute inset-y-0 left-4 flex items-center"
+            >
+              <i data-lucide="search" class="text-muted"></i>
+            </div>
+
+            <input
+              id="searchInput"
+              oninput="handleSearch()"
+              class="w-full pl-12 pr-4 py-3 rounded-full bg-branding border border-muted focus:outline-none focus:ring-2 focus:ring-brand/30"
+              placeholder="Search team"
+            />
+          </div>
+
+          <div class="relative md:w-52">
+            <button
+              onclick="toggleSort()"
+              class="w-full flex items-center justify-between px-5 py-3 rounded-full bg-branding border border-muted text-brand-dark hover:bg-white/90 transition focus:outline-none"
+            >
+              <span id="sortLabel">Sort by</span>
+              <svg
+                class="w-5 h-5 text-muted"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 9l6 6 6-6"
+                />
+              </svg>
+            </button>
+
+            <!-- Dropdown -->
+            <ul
+              id="sortMenu"
+              class="absolute z-20 mt-2 w-full bg-white rounded-2xl shadow-lg border border-border hidden overflow-hidden"
+            >
+              <li
+                onclick="selectSort('az', 'Name A–Z')"
+                class="px-5 py-3 cursor-pointer hover:bg-brand/10 hover:text-brand transition"
+              >
+                Name A–Z
+              </li>
+              <li
+                onclick="selectSort('za', 'Name Z–A')"
+                class="px-5 py-3 cursor-pointer hover:bg-brand/10 hover:text-brand transition"
+              >
+                Name Z–A
+              </li>
+              <li
+                onclick="selectSort('date-asc', 'Date (Oldest)')"
+                class="px-5 py-3 cursor-pointer hover:bg-brand/10 hover:text-brand transition"
+              >
+                Date (Oldest)
+              </li>
+              <li
+                onclick="selectSort('date-desc', 'Date (Newest)')"
+                class="px-5 py-3 cursor-pointer hover:bg-brand/10 hover:text-brand transition"
+              >
+                Date (Newest)
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Table Container -->
+        <div
+          class="glass-card rounded-3xl md:rounded-5xl shadow-glow-lg overflow-hidden"
+        >
+          <!-- Desktop Table -->
+          <div class="hidden md:block overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="border-b border-border">
+                  <th
+                    class="px-8 py-5 text-left text-lg font-medium text-black"
+                  >
+                    Team Name
+                  </th>
+                  <th
+                    class="px-8 py-5 text-left text-lg font-medium text-black"
+                  >
+                    Registration Date
+                  </th>
+                  <th
+                    class="px-8 py-5 text-center text-lg font-medium text-black"
+                  >
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
+
+          <!-- Mobile List -->
+          <div id="mobileList" class="md:hidden p-4 space-y-3"></div>
+
+          <!-- Empty State -->
+          <div id="emptyState" class="hidden text-center py-16">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="64"
+              height="64"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="mx-auto text-muted mb-4"
+            >
+              <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
+              <path
+                d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"
+              ></path>
+            </svg>
+            <p class="text-muted text-lg">No teams found</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- View Modal -->
+      <div
+        id="viewModal"
+        class="fixed inset-0 hidden items-center justify-center bg-black/60 modal-overlay z-50 p-4"
+        onclick="closeModalOnOverlay(event, 'viewModal')"
+      >
+        <div
+          class="glass-card p-8 rounded-3xl w-full max-w-md"
+          onclick="event.stopPropagation()"
+        >
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-2xl font-semibold text-brand-dark">
+              View Team Details
+            </h3>
+            <button
+              onclick="closeModal('viewModal')"
+              class="text-muted hover:text-brand-dark"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+            </button>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <p class="text-sm font-medium text-muted mb-1">Team Name</p>
+              <p id="vName" class="text-lg text-brand-dark"></p>
+            </div>
+
+            <div>
+              <p class="text-sm font-medium text-muted mb-1">Leader</p>
+              <p id="vLeader" class="text-lg text-brand-dark"></p>
+            </div>
+
+            <div>
+              <p class="text-sm font-medium text-muted mb-1">Email</p>
+              <p id="vEmail" class="text-lg text-brand-dark"></p>
+            </div>
+
+            <div>
+              <p class="text-sm font-medium text-muted mb-1">
+                Registration Date
+              </p>
+              <p id="vDate" class="text-lg text-brand-dark"></p>
+            </div>
+
+            <div>
+              <p class="text-sm font-medium text-muted mb-2">Members</p>
+              <div
+                id="vMembers"
+                class="bg-white/50 rounded-2xl p-4 border-2 border-brand/20"
+              ></div>
+            </div>
+          </div>
+
+          <button
+            onclick="closeModal('viewModal')"
+            class="mt-6 w-full bg-brand hover:bg-brand-dark text-white py-3 rounded-full font-medium transition"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+
+      <!-- Edit Modal -->
+      <div
+        id="editModal"
+        class="fixed inset-0 hidden items-center justify-center bg-black/60 modal-overlay z-50 p-4"
+        onclick="closeModalOnOverlay(event, 'editModal')"
+      >
+        <div
+          class="glass-card p-8 rounded-3xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+          onclick="event.stopPropagation()"
+        >
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-2xl font-semibold text-brand-dark">Edit Team</h3>
+            <button
+              onclick="closeModal('editModal')"
+              class="text-muted hover:text-brand-dark"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+            </button>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label class="text-sm font-medium text-muted">Team Name</label>
+              <input
+                id="eName"
+                class="w-full mt-2 px-4 py-3 bg-white/70 border-2 border-brand/20 rounded-2xl text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand/30"
+                placeholder="Enter team name"
+              />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium text-muted">Leader</label>
+              <input
+                id="eLeader"
+                class="w-full mt-2 px-4 py-3 bg-white/70 border-2 border-brand/20 rounded-2xl text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand/30"
+                placeholder="Enter leader name"
+              />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium text-muted">Email</label>
+              <input
+                id="eEmail"
+                type="email"
+                class="w-full mt-2 px-4 py-3 bg-white/70 border-2 border-brand/20 rounded-2xl text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand/30"
+                placeholder="Enter email address"
+              />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium text-muted"
+                >Registration Date</label
+              >
+              <input
+                id="eDate"
+                type="date"
+                class="w-full mt-2 px-4 py-3 bg-white/70 border-2 border-brand/20 rounded-2xl text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand/30"
+              />
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <label class="text-sm font-medium text-muted">Members</label>
+                <button
+                  onclick="addMemberField()"
+                  class="text-brand hover:text-brand-dark text-sm font-medium flex items-center gap-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M8 12h8"></path>
+                    <path d="M12 8v8"></path>
+                  </svg>
+                  Add Member
+                </button>
+              </div>
+              <div id="memberList" class="space-y-2"></div>
+            </div>
+          </div>
+
+          <div class="flex gap-3 mt-6">
+            <button
+              onclick="closeModal('editModal')"
+              class="flex-1 border-2 border-brand text-brand rounded-full py-3 font-medium hover:bg-brand/10 transition"
+            >
+              Cancel
+            </button>
+            <button
+              onclick="saveEdit()"
+              class="flex-1 bg-brand hover:bg-brand-dark text-white rounded-full py-3 font-medium transition"
+            >
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete Modal -->
+      <div
+        id="deleteModal"
+        class="fixed inset-0 hidden items-center justify-center bg-black/60 modal-overlay z-50 p-4"
+        onclick="closeModalOnOverlay(event, 'deleteModal')"
+      >
+        <div
+          class="glass-card p-8 rounded-3xl w-full max-w-sm text-center"
+          onclick="event.stopPropagation()"
+        >
+          <div
+            class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-red-600"
+            >
+              <path d="M3 6h18"></path>
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+            </svg>
+          </div>
+
+          <h3 class="text-2xl font-bold text-brand-dark mb-2">Delete Team?</h3>
+          <p class="text-muted mb-6">
+            This action cannot be undone. All team data will be permanently
+            removed.
+          </p>
+
+          <div class="flex gap-3">
+            <button
+              onclick="closeModal('deleteModal')"
+              class="flex-1 border-2 border-brand text-brand rounded-full py-3 font-medium hover:bg-brand/10 transition"
+            >
+              Cancel
+            </button>
+            <button
+              onclick="confirmDelete()"
+              class="flex-1 bg-red-400 hover:bg-red-500 text-white rounded-full py-3 font-medium transition"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/admin-panel.js"></script>
+  </body>
+</html>

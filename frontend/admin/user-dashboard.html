@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../config/tailwind.config.js"></script>
+
+    <!-- Goggles Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Changa:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icon -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+
+  <body class="min-h-screen text-white font-sans bg-background overflow-hidden">
+    <!-- Gradient Backgrounds -->
+    <div
+      class="absolute top-0 left-1/4 -translate-x-1/2 w-64 h-64 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[600px] rounded-full bg-brand/30 blur-[120px] animate-pulse"
+    ></div>
+    <div
+      class="absolute bottom-[-100px] right-[-300px] w-64 h-64 sm:w-80 sm:h-80 lg:w-[400px] lg:h-[500px] rounded-full bg-accent/30 blur-[100px]"
+    ></div>
+    <div
+      class="absolute top-20 left-[-300px] w-48 h-48 sm:w-64 sm:h-64 lg:w-[400px] lg:h-[300px] rounded-full bg-accent/20 blur-[100px]"
+    ></div>
+
+    <!-- Top Bar -->
+    <div class="flex justify-end p-6 relative z-10">
+      <button
+        id="logoutBtn"
+        class="flex items-center gap-2 text-red-400 hover:text-red-300 transition-colors duration-300 font-medium"
+      >
+        <i data-lucide="log-out" class="w-4 h-4"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-16 relative z-10">
+      <div class="grid lg:grid-cols-3 gap-6">
+        <!-- LLeft Panel - Leader Info -->
+        <div
+          class="lg:row-span-2 bg-nav/50 backdrop-blur-xl border border-body/10 rounded-3xl p-8"
+        >
+          <h2 class="text-3xl font-bold text-heading mb-2 font-sans">
+            Ackerman
+          </h2>
+          <p class="text-body mb-8 text-sm">Leader Information</p>
+
+          <div id="leaderInfo" class="space-y-1">
+            <!-- Full name -->
+            <div class="flex items-center gap-4 py-3">
+              <i
+                data-lucide="user"
+                class="w-5 h-5 text-body/60 flex-shrink-0"
+              ></i>
+              <span class="text-body text-sm min-w-[140px]">Full name</span>
+              <span class="text-heading text-sm ml-auto text-right"
+                >Alucard</span
+              >
+            </div>
+
+            <!-- Email -->
+            <div class="flex items-center gap-4 py-3">
+              <i
+                data-lucide="mail"
+                class="w-5 h-5 text-body/60 flex-shrink-0"
+              ></i>
+              <span class="text-body text-sm min-w-[140px]">Email</span>
+              <span class="text-heading text-sm ml-auto text-right"
+                >alu22@gmail.com</span
+              >
+            </div>
+
+            <!-- Whatsapp -->
+            <div class="flex items-center gap-4 py-3">
+              <i
+                data-lucide="message-circle"
+                class="w-5 h-5 text-body/60 flex-shrink-0"
+              ></i>
+              <span class="text-body text-sm min-w-[140px]">Whatsapp</span>
+              <span class="text-heading text-sm ml-auto text-right"
+                >+62399999999</span
+              >
+            </div>
+
+            <!-- Line ID -->
+            <div class="flex items-center gap-4 py-3">
+              <svg
+                class="w-5 h-5 text-body/60 flex-shrink-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span class="text-body text-sm min-w-[140px]">Line ID</span>
+              <span class="text-heading text-sm ml-auto text-right"
+                >@alu22</span
+              >
+            </div>
+
+            <!-- Github/Gitlab ID -->
+            <div class="flex items-center gap-4 py-3">
+              <i
+                data-lucide="github"
+                class="w-5 h-5 text-body/60 flex-shrink-0"
+              ></i>
+              <span class="text-body text-sm min-w-[140px]"
+                >Github/Gitlab ID</span
+              >
+              <span class="text-heading text-sm ml-auto text-right"
+                >@card.3</span
+              >
+            </div>
+
+            <!-- Birthplace -->
+            <div class="flex items-center gap-4 py-3">
+              <i
+                data-lucide="map-pin"
+                class="w-5 h-5 text-body/60 flex-shrink-0"
+              ></i>
+              <span class="text-body text-sm min-w-[140px]">Birthplace</span>
+              <span class="text-heading text-sm ml-auto text-right"
+                >Jakarta</span
+              >
+            </div>
+
+            <!-- Birth date -->
+            <div class="flex items-center gap-4 py-3">
+              <i
+                data-lucide="calendar"
+                class="w-5 h-5 text-body/60 flex-shrink-0"
+              ></i>
+              <span class="text-body text-sm min-w-[140px]">Birth date</span>
+              <span class="text-heading text-sm ml-auto text-right"
+                >3 Januari 2000</span
+              >
+            </div>
+
+            <!-- CV -->
+            <div class="flex items-center gap-4 py-3">
+              <i
+                data-lucide="file-text"
+                class="w-5 h-5 text-body/60 flex-shrink-0"
+              ></i>
+              <span class="text-body text-sm min-w-[140px]">CV</span>
+              <a
+                href="#"
+                class="text-brand text-sm ml-auto text-right underline hover:text-body transition-colors"
+                >View</a
+              >
+            </div>
+
+            <!-- ID Card/Flazz Card -->
+            <div class="flex items-center gap-4 py-3">
+              <i
+                data-lucide="credit-card"
+                class="w-5 h-5 text-body/60 flex-shrink-0"
+              ></i>
+              <span class="text-body text-sm min-w-[140px]"
+                >ID Card/Flazz Card</span
+              >
+              <a
+                href="#"
+                class="text-brand text-sm ml-auto text-right underline hover:text-body transition-colors"
+                >View</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div
+          class="lg:col-span-2 bg-nav/50 backdrop-blur-xl border border-body/10 rounded-3xl p-8"
+        >
+          <h2 class="text-2xl font-bold text-heading mb-8 font-sans">
+            Timeline Information
+          </h2>
+
+          <div id="timelineList" class="space-y-6">
+            <!-- Timeline Item 1 -->
+            <div class="relative pl-8">
+              <div
+                class="absolute left-0 top-2 w-3 h-3 bg-body/40 rounded-full"
+              ></div>
+              <div
+                class="absolute left-[5.5px] top-5 bottom-[-24px] w-px bg-body/20"
+              ></div>
+              <div class="flex justify-between items-start flex-wrap gap-2">
+                <span class="text-heading font-medium">Open Registration</span>
+                <span class="text-body text-sm">1 May 2025</span>
+              </div>
+            </div>
+
+            <!-- Timeline Item 2 -->
+            <div class="relative pl-8">
+              <div
+                class="absolute left-0 top-2 w-3 h-3 bg-body/40 rounded-full"
+              ></div>
+              <div
+                class="absolute left-[5.5px] top-5 bottom-[-24px] w-px bg-body/20"
+              ></div>
+              <div class="flex justify-between items-start flex-wrap gap-2">
+                <span class="text-heading font-medium">Close Registration</span>
+                <span class="text-body text-sm">25 May 2025</span>
+              </div>
+            </div>
+
+            <!-- Timeline Item 3 -->
+            <div class="relative pl-8">
+              <div
+                class="absolute left-0 top-2 w-3 h-3 bg-body/40 rounded-full"
+              ></div>
+              <div
+                class="absolute left-[5.5px] top-5 bottom-[-24px] w-px bg-body/20"
+              ></div>
+              <div class="flex justify-between items-start flex-wrap gap-2">
+                <span class="text-heading font-medium">Technical Meeting</span>
+                <span class="text-body text-sm">28 May 2025</span>
+              </div>
+            </div>
+
+            <!-- Timeline Item 4 (Last) -->
+            <div class="relative pl-8">
+              <div
+                class="absolute left-0 top-2 w-3 h-3 bg-body/40 rounded-full"
+              ></div>
+              <div>
+                <div
+                  class="flex justify-between items-start flex-wrap gap-2 mb-2"
+                >
+                  <span class="text-heading font-medium">Competition Day</span>
+                  <span class="text-body text-sm">1-2 June 2025</span>
+                </div>
+                <a
+                  href="#"
+                  class="text-brand text-sm underline hover:text-body transition-colors"
+                  >Link</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Member -->
+        <div
+          class="bg-nav/50 backdrop-blur-xl border border-body/10 rounded-3xl p-8"
+        >
+          <h2 class="text-2xl font-bold text-heading mb-6 font-display">
+            Member
+          </h2>
+
+          <div id="memberList" class="space-y-1">
+            <div class="flex items-center gap-3 py-3">
+              <i data-lucide="user" class="w-4 h-4 text-body"></i>
+              <span class="text-heading">Alucard</span>
+            </div>
+            <div class="flex items-center gap-3 py-3">
+              <i data-lucide="user" class="w-4 h-4 text-body"></i>
+              <span class="text-heading">Miya</span>
+            </div>
+            <div class="flex items-center gap-3 py-3">
+              <i data-lucide="user" class="w-4 h-4 text-body"></i>
+              <span class="text-heading">Cecil</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conact -->
+        <div
+          class="bg-nav/50 backdrop-blur-xl border border-body/10 rounded-3xl p-8"
+        >
+          <h2 class="text-2xl font-bold text-heading mb-3 font-sans">
+            Our Contact
+          </h2>
+          <p class="text-body text-sm mb-6">Need help? Contact us</p>
+
+          <div id="contactList" class="space-y-1">
+            <div class="flex items-center gap-4 py-3.5">
+              <i data-lucide="phone" class="w-5 h-5 text-body/60"></i>
+              <span class="text-heading text-sm">+62999999999</span>
+            </div>
+            <div class="flex items-center gap-4 py-3.5">
+              <i data-lucide="mail" class="w-5 h-5 text-body/60"></i>
+              <span class="text-heading text-sm">hackaton@ton.net</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logout Modal -->
+    <div
+      id="logoutModal"
+      class="hidden fixed inset-0 bg-background/80 backdrop-blur-sm z-50 items-center justify-center"
+    >
+      <div
+        class="bg-branding backdrop-blur-xl border border-body/20 rounded-3xl p-8 max-w-md w-[90%] animate-modal-in"
+      >
+        <div class="text-center mb-6">
+          <div
+            class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/20 flex items-center justify-center"
+          >
+            <i data-lucide="log-out" class="w-8 h-8 text-red-400"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-black mb-2 font-sans">
+            Logout Confirmation
+          </h3>
+          <p class="text-black text-sm">Are you sure you want to logout?</p>
+        </div>
+
+        <div class="flex gap-3">
+          <button
+            id="cancelBtn"
+            class="flex-1 border-2 border-brand text-brand rounded-full py-3 font-medium hover:bg-brand/10 transition"
+          >
+            Cancel
+          </button>
+          <button
+            id="confirmLogoutBtn"
+            class="flex-1 bg-red-400 hover:bg-red-500 text-white rounded-full py-3 font-medium transition"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/user-dashboard.js"></script>
+  </body>
+</html>

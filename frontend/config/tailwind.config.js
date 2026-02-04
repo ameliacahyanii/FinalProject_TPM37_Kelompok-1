@@ -99,6 +99,15 @@ tailwind.config = {
         xs: "475px",
         "3xl": "1920px",
       },
+      animation: {
+        "modal-in": "modalIn 0.3s ease-out",
+      },
+      keyframes: {
+        modalIn: {
+          "0%": { opacity: "0", transform: "translateY(-20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+      },
     },
   },
   plugins: [],
