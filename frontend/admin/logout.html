@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Logout</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center
+             bg-gradient-to-br from-[#050816] via-[#0b0f2a] to-black">
+
+  <!-- LOGOUT MODAL -->
+  <div class="bg-white rounded-2xl px-8 py-6 w-[340px] text-center shadow-2xl">
+    
+    <!-- ICON -->
+    <div class="flex justify-center mb-4">
+      <div class="w-10 h-10 rounded-full border-2 border-red-400 flex items-center justify-center">
+        <span class="text-red-500 text-xl font-bold">!</span>
+      </div>
+    </div>
+
+    <!-- TEXT -->
+    <p class="text-gray-800 font-medium mb-6">
+      Apakah Anda yakin ingin logout?
+    </p>
+
+    <!-- BUTTONS -->
+    <div class="flex justify-center gap-4">
+      <button
+        class="px-6 py-2 rounded-full border border-indigo-400 text-indigo-500
+               hover:bg-indigo-50 transition">
+        Tidak
+      </button>
+
+      <button
+        class="px-6 py-2 rounded-full bg-red-400 text-white
+               hover:bg-red-500 transition">
+        Ya
+      </button>
+    </div>
+
+  </div>
+
+</body>
+</html>
