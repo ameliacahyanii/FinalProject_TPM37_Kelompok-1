@@ -305,7 +305,74 @@ function validateStep() {
     });
     return isValid;
   });
+
+  if (!isValid) return;
   submitForm();
+}
+
+async function submitForm() {
+  const emptyField = document.getElementById("emptyField");
+  const registerButton = document.getElementById("registerButton");
+
+  try {
+    if (registerButton) registerButton.disabled = true;
+
+    const nameInput = document.getElementById("name");
+    const passwordInput = document.getElementById("password");
+    const fullNameInput = document.getElementById("fullName");
+    const emailInput = document.getElementById("email");
+    const whatsappInput = document.getElementById("whatsapp");
+    const lineIdInput = document.getElementById("lineID");
+    const githubIdInput = document.getElementById("githubId");
+    const birthPlaceInput = document.getElementById("birthPlace");
+    const birthDateInput = document.getElementById("birthdateInput");
+    const cvInput = document.getElementById("cvFile");
+    const idCardInputs = document.querySelectorAll('input#idCardFile');
+
+    const name = nameInput?.value?.trim();
+    const password = passwordInput?.value?.trim();
+    const fullName = fullNameInput?.value?.trim();
+    const email = emailInput?.value?.trim();
+    const whatsapp = whatsappInput?.value?.trim();
+    const lineId = lineIdInput?.value?.trim();
+    const githubId = githubIdInput?.value?.trim();
+    const birthPlace = birthPlaceInput?.value?.trim();
+    const birthDate = birthDateInput?.value;
+
+    const cvFile = cvInput?.files?.[0];
+    const idCardFile = Array.from(idCardInputs)
+      .map((el) => el.files && el.files[0])
+      .find(Boolean);
+
+    if (!cvFile || !idCardFile) {
+      if (emptyField) emptyField.classList.remove("hidden");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", name || "");
+    formData.append("password", password || "");
+    formData.append("fullName", fullName || "");
+    formData.append("email", email || "");
+    formData.append("whatsapp", whatsapp || "");
+    formData.append("lineId", lineId || "");
+    formData.append("githubId", githubId || "");
+    formData.append("birthPlace", birthPlace || "");
+    formData.append("birthDate", birthDate || "");
+    formData.append("cvFile", cvFile);
+    formData.append("idCardFile", idCardFile);
+
+    await apiRequest("/api/auth/register", {
+      method: "POST",
+      body: formData,
+    });
+
+    await loginController(name, password);
+  } catch (err) {
+    alert(err.message || "Registrasi gagal");
+  } finally {
+    if (registerButton) registerButton.disabled = false;
+  }
 }
 
 document.querySelectorAll("input[required]").forEach((input) => {
@@ -328,7 +395,7 @@ document.querySelectorAll("input[required]").forEach((input) => {
 const passwordInput = document.getElementById("password"); // register password input, not login
 const passwordError = document.getElementById("passwordError");
 
-passwordInput.addEventListener("input", () => {
+if (passwordInput) passwordInput.addEventListener("input", () => {
   const password = passwordInput.value;
 
   const hasMinLength = password.length >= 8;
@@ -374,8 +441,8 @@ function validateConfirmPassword() {
   }
 }
 
-confirmInput.addEventListener("input", validateConfirmPassword);
-passwordInput.addEventListener("input", validateConfirmPassword);
+if (confirmInput) confirmInput.addEventListener("input", validateConfirmPassword);
+if (passwordInput) passwordInput.addEventListener("input", validateConfirmPassword);
 
 // Email validation
 const emailInput = document.getElementById("email");
@@ -407,7 +474,7 @@ function validateEmail() {
   }
 }
 
-emailInput.addEventListener("input", validateEmail);
+if (emailInput) emailInput.addEventListener("input", validateEmail);
 
 // Whatsapp validation
 const whatsappInput = document.getElementById("whatsapp");
@@ -439,7 +506,7 @@ function validateWhatsapp() {
   }
 }
 
-whatsappInput.addEventListener("input", validateWhatsapp);
+if (whatsappInput) whatsappInput.addEventListener("input", validateWhatsapp);
 
 // Birthdate validation
 const birthdateInput = document.getElementById("birthdateInput");
@@ -475,7 +542,7 @@ function validateAge() {
   }
 }
 
-birthdateInput.addEventListener("change", validateAge);
+if (birthdateInput) birthdateInput.addEventListener("change", validateAge);
 
 // Login validation
 function loginvalidate() {

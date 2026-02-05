@@ -28,6 +28,21 @@ app.use("/api/team", teamRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api", generalRoutes);
 
+// centralized error handler
+app.use((err, req, res, next) => {
+	console.error("Unhandled error:", err);
+
+	if (res.headersSent) {
+		return next(err);
+	}
+
+	const statusCode = err.statusCode || err.status || 500;
+	return res.status(statusCode).json({
+		success: false,
+		error: err.message || "Terjadi kesalahan server.",
+	});
+});
+
 // basic route
 app.get("/", (req, res) => {
 	res.json({ message: "Hackathon 2025 Backend API" });

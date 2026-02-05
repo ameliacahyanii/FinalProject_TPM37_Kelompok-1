@@ -1,27 +1,87 @@
-// login controlller
-// async function loginController(teamName, password) {
-//   const errorText = document.getElementById("errorText");
+async function loginController(teamName, password) {
+  const errorText = document.getElementById("errorText");
 
-//   try {
-//     const res = await apiRequest("/api/auth/login", {
-//       method: "POST",
-//       body: JSON.stringify({
-//         teamName,
-//         password,
-//       }),
-//     });
+  try {
+    const res = await apiRequest("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify({
+        name: teamName,
+        password,
+      }),
+    });
 
-//     if (res.token) {
-//       localStorage.setItem("token", res.token);
-//     }
+    if (res.token) {
+      localStorage.setItem("token", res.token);
+    }
 
-//     // success redirect
-//     window.location.href = "./dashboard.html";
-//   } catch (err) {
-//     errorText.textContent = err.message || "Login gagal";
-//     errorText.classList.remove("hidden");
-//   }
-// }
+    window.location.href = "./admin/user-dashboard.html"; 
+  } catch (err) {
+    if (errorText) {
+      errorText.textContent = err.message || "Login gagal";
+      errorText.classList.remove("hidden");
+    } else {
+      console.error("Error text element not found:", err.message || "Login gagal");
+    }
+  }
+}
+
+async function adminLoginController(username, password) {
+  const errorText = document.getElementById("errorText");
+
+  try {
+    const res = await apiRequest("/api/auth/admin-login", {
+      method: "POST",
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    });
+
+    if (res.token) {
+      localStorage.setItem("token", res.token);
+      localStorage.setItem("userRole", res.role || "admin");
+    }
+
+    window.location.href = "./admin-panel.html";
+  } catch (err) {
+    if (errorText) {
+      errorText.textContent = err.message || "Login admin gagal";
+      errorText.classList.remove("hidden");
+    }
+  }
+}
+
+function adminLoginvalidate() {
+  const usernameInput = document.getElementById("teamInput");
+  const passwordInput = document.getElementById("passwordInput");
+  const errorText = document.getElementById("errorText");
+
+  const username = usernameInput?.value?.trim();
+  const password = passwordInput?.value?.trim();
+
+  if (errorText) errorText.classList.add("hidden");
+  usernameInput?.classList.remove("border-red-500");
+  passwordInput?.classList.remove("border-red-500");
+
+  let isValid = true;
+
+  if (!username) {
+    usernameInput?.classList.add("border-red-500");
+    isValid = false;
+  }
+
+  if (!password) {
+    passwordInput?.classList.add("border-red-500");
+    isValid = false;
+  }
+
+  if (!isValid) {
+    if (errorText) errorText.classList.remove("hidden");
+    return;
+  }
+
+  adminLoginController(username, password);
+}
 
 // register controller
 async function registerTeam() {

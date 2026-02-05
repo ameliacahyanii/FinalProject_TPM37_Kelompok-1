@@ -15,7 +15,7 @@ const register = async (req, res) => {
 		if (!files || !files["cvFile"] || !files["idCardFile"]) {
 			return res.status(400).json({
 				success: false,
-				errorr: "Wajib upload CV dan ID Card!",
+				error: "Wajib upload CV dan ID Card!",
 			});
 		}
 
@@ -123,6 +123,11 @@ const register = async (req, res) => {
 				error: `Data ${target} sudah terdaftar.`,
 			});
 		}
+
+		return res.status(500).json({
+			success: false,
+			error: "Terjadi kesalahan server saat proses registrasi.",
+		});
 	}
 };
 
@@ -130,11 +135,19 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
 	try {
-		const { name, password } = req.body;
+		const { name, teamName, password } = req.body || {};
+		const loginName = name || teamName;
+
+		if (!loginName || !password) {
+			return res.status(400).json({
+				success: false,
+				error: "Nama tim dan password wajib diisi.",
+			});
+		}
 
 		// cek team berdasarkan name di database
 		const team = await prisma.team.findUnique({
-			where: { name },
+			where: { name: loginName },
 		});
 
 		// jika team tidak ditemukan

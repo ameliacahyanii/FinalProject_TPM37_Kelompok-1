@@ -1,32 +1,35 @@
-async function apiRequest(url, options = {}) {
-  const res = await fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    ...options,
-  });
+const API_BASE_URL = "http://localhost:3000";
 
-  const data = await res.json();
+async function apiRequest(path, options = {}) {
+  const url = /^https?:\/\//i.test(path)
+    ? path
+    : `${API_BASE_URL}${path.startsWith("/") ? "" : "/"}${path}`;
 
-  if (!res.ok) {
-    throw new Error(data.message || "Request failed");
+  const headers = { ...(options.headers || {}) };
+  const isFormData =
+    typeof FormData !== "undefined" && options.body instanceof FormData;
+
+  if (!isFormData && !headers["Content-Type"] && !headers["content-type"]) {
+    headers["Content-Type"] = "application/json";
   }
 
-  (async () => {
-    try {
-      const res = await apiRequest("/api/auth/login", {
-        method: "POST",
-        body: JSON.stringify({
-          teamName: "test",
-          password: "test123",
-        }),
-      });
+  const res = await fetch(url, {
+    ...options,
+    headers,
+  });
 
-      console.log("API SUCCESS:", res);
-    } catch (err) {
-      console.error("API ERROR:", err.message);
-    }
-  })();
+  const contentType = res.headers.get("content-type") || "";
+  const data = contentType.includes("application/json")
+    ? await res.json()
+    : await res.text();
+
+  if (!res.ok) {
+    const message =
+      data && typeof data === "object"
+        ? data.error || data.message || "Request failed"
+        : "Request failed";
+    throw new Error(message);
+  }
 
   return data;
 }

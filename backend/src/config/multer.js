@@ -2,11 +2,18 @@
 
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 // 1. Menentukan LOKASI dan FILE NAME
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		cb(null, "public/uploads/");
+		const uploadPath = path.join("public", "uploads");
+		try {
+			fs.mkdirSync(uploadPath, { recursive: true });
+		} catch (e) {
+			return cb(e);
+		}
+		cb(null, uploadPath);
 	},
 	filename: (req, file, cb) => {
 		// Format nama: TIMESTAMP-NamaAsli.ext
@@ -35,7 +42,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
 	storage: storage,
 	limits: {
-		filesize: 5 * 1024 * 1024, // max: 5MB per file
+		fileSize: 5 * 1024 * 1024, // max: 5MB per file
 	},
 	fileFilter: fileFilter,
 });
