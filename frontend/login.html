@@ -3,99 +3,135 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login | TPM Hackathon</title>
+    <title>Login</title>
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Custom Tailwind Config -->
     <script src="./config/tailwind.config.js"></script>
 
-    <!-- Flowbite CSS -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Changa:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
   </head>
 
   <body
-    class="min-h-screen text-body bg-[radial-gradient(circle_at_top_right,rgba(500,120,254,1),#04081F_20%)]"
+    class="relative min-h-screen bg-background text-body overflow-x-hidden font-sans"
   >
-    <div class="min-h-screen flex items-center justify-center px-4">
-      <form
-        class="relative p-12 rounded-2xl w-full max-w-screen-md mt-10 mb-10 bg-[rgba(39,33,106,1)]"
-      >
-        <div
-          class="absolute -inset-3 blur-md bg-[rgba(39,33,106,1)] opacity-80 -z-10"
-        ></div>
-        <p id="errorText" class="mt-2 mb-5 text-red-500 hidden">
-          Pastikan untuk mengisi semua field telah diisi
-        </p>
-        <div class="p-5 flex flex-col items-center">
-          <h2 class="text-3xl font-light text-heading text-center mb-5">
-            Login
-          </h2>
+    <!-- Gradient Background Effects -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[360px] sm:w-[620px] sm:h-[420px] bg-brand/20 blur-[140px] rounded-full"
+      ></div>
+      <div
+        class="absolute top-20 left-[-260px] w-48 h-48 sm:w-64 sm:h-64 lg:w-[380px] lg:h-[280px] rounded-full bg-accent/20 blur-[100px]"
+      ></div>
+      <div
+        class="absolute bottom-[-120px] right-[-220px] w-64 h-64 sm:w-80 sm:h-80 lg:w-[420px] lg:h-[520px] rounded-full bg-accent/20 blur-[120px]"
+      ></div>
+    </div>
 
-          <div class="mb-6 w-full flex flex-col items-center">
-            <div class="w-9/12">
-              <label class="block text-sm font-medium mb-1 text-left">
+    <!-- Main Content -->
+    <div
+      class="relative min-h-screen flex items-center justify-center px-4 py-8"
+    >
+      <div class="w-full max-w-md sm:max-w-lg md:max-w-2xl">
+        <form
+          class="bg-nav/50 backdrop-blur-xl rounded-3xl p-8 sm:p-10 md:p-12 lg:p-16 shadow-[0_0_100px_5px_rgba(39,33,106,0.6)]"
+        >
+          <!-- Error Message -->
+          <p
+            id="errorText"
+            class="mb-4 text-red-400 text-sm text-center hidden"
+          >
+            Make sure all fields are filled
+          </p>
+
+          <!-- Header -->
+          <h1
+            class="text-2xl md:text-5xl text-heading text-center mb-8 md:mb-10"
+          >
+            Login
+          </h1>
+
+          <!-- Form Fields Container -->
+          <div class="space-y-6 mb-8">
+            <!-- Team Name -->
+            <div class="w-full">
+              <label
+                for="teamInput"
+                class="block text-lg sm:text-xl mb-2 text-body font-medium"
+              >
                 Team Name
               </label>
               <input
-                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                placeholder="Nama Tim"
                 id="teamInput"
+                type="text"
+                placeholder="Team Name |"
                 required
+                class="w-full px-4 py-3 sm:py-4 rounded-xl bg-white/5 border-2 border-heading/50 text-white placeholder-white/40 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition-all duration-200"
               />
             </div>
-          </div>
 
-          <div class="mb-6 w-full flex flex-col items-center">
-            <div class="w-9/12">
-              <label class="block text-sm font-medium mb-1 text-left">
+            <!-- Password -->
+            <div class="w-full">
+              <label
+                for="passwordInput"
+                class="block text-lg sm:text-xl mb-2 text-body font-medium"
+              >
                 Password
               </label>
               <input
-                type="password"
-                class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                placeholder="Password"
                 id="passwordInput"
+                type="password"
+                placeholder="Password |"
                 required
+                class="w-full px-4 py-3 sm:py-4 rounded-xl bg-white/5 border-2 border-heading/50 text-white placeholder-white/40 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition-all duration-200"
               />
             </div>
           </div>
 
-          <div class="flex gap-4 justify-center">
-            <!-- href="./dashboard.html" -->
+          <!-- Action Buttons -->
+          <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6">
             <button
               type="button"
-              class="bg-transparent border-2 rounded-full px-5 py-1 border-indigo-500 transition-all duration-300 hover:shadow-[0_0_12px_rgba(99,102,241,0.8)] hover:bg-indigo-500/10"
               onclick="loginvalidate()"
+              class="w-full sm:flex-1 px-6 py-3 rounded-full border-2 border-brand bg-brand/10 text-heading font-medium hover:bg-brand/30 focus:outline-none focus:ring-4 focus:ring-brand/30 transition-all duration-200"
             >
               Login
             </button>
+
             <a
               href="./admin/admin-login.html"
-              class="bg-transparent border-2 rounded-full px-5 py-1 border-indigo-500 transition-all duration-300 hover:shadow-[0_0_12px_rgba(99,102,241,0.8)] hover:bg-indigo-500/10"
+              class="w-full sm:flex-1 px-6 py-3 rounded-full border-2 border-brand text-heading font-medium hover:bg-brand/20 focus:outline-none focus:ring-4 focus:ring-brand/30 transition-all duration-200 text-center"
             >
               Login as Admin
             </a>
           </div>
 
-          <p class="text-sm text-muted mt-4 text-center">
-            Belum punya akun?
-            <a href="register.html" class="text-brand hover:underline">
-              Daftar
+          <p class="text-sm text-muted text-center">
+            Don't have an account yet?
+            <a
+              href="register.html"
+              class="text-brand underline hover:text-heading transition-colors duration-200"
+            >
+              Register here
             </a>
           </p>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
 
-    <!-- Flowbite JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
-    
-    <!-- JS Links -->
+    <script>
+      lucide.createIcons();
+    </script>
+
     <script src="./js/api.js" defer></script>
     <script src="./js/auth.js" defer></script>
     <script src="./js/main.js" defer></script>

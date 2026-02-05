@@ -3,327 +3,488 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register | TPM Hackathon</title>
+    <title>Register</title>
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Custom Tailwind Config -->
     <script src="./config/tailwind.config.js"></script>
 
-    <!-- Flowbite CSS -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Changa:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/style.css" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
   </head>
 
   <body
-    class="min-h-screen text-body bg-[radial-gradient(circle_at_top_left,rgba(92,77,236,1),#04081F_20%)]"
+    class="relative min-h-screen bg-background text-body overflow-x-hidden font-sans"
   >
-    <div class="min-h-screen flex items-center justify-center px-4">
-      <form
-        class="relative p-8 rounded-2xl w-full max-w-screen-lg mt-10 mb-10 bg-[rgba(39,33,106,1)]"
-      >
-        <div
-          class="absolute -inset-3 blur-md bg-[rgba(39,33,106,1)] opacity-80 -z-10"
-        ></div>
-        <p id="emptyField" class="mt-2 mb-5 text-red-500 hidden">
-          Pastikan untuk mengisi semua field yang ditandai dengan
-          <span class="text-red-500"> (*) </span> telah diisi
-        </p>
-
-        <!-- Step 1: Group Information -->
-        <section class="step grid grid-cols-2 gap-10">
-          <div>
-            <h2 class="text-4xl font-light text-heading text-left mb-2">
-              Register
-            </h2>
-            <p class="text-md font-light mb-3 top-0">Informasi Group</p>
-          </div>
-          <div>
-            <div class="mb-4">
-              <label class="block text-md font-light mb-1"
-                >Nama Group <span class="text-red-500"> * </span></label
-              >
-              <input
-                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                placeholder="Nama Group |"
-                id="name"
-                required
-              />
-            </div>
-            <div class="mb-4">
-              <label class="block text-md font-light mb-1"
-                >Password <span class="text-red-500"> * </span></label
-              >
-              <input
-                type="password"
-                id="password"
-                class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                placeholder="Password |"
-                required
-              />
-              <p
-                id="passwordError"
-                class="text-sm font-light font mt-2 opacity-50"
-              >
-                > Minimal 8 Karakter <br />
-                > Menggunakan Lowercase dan Uppercase <br />
-                > Menggunakan Angka <br />
-                > Menggunakan Simbol Khusus <br />
-              </p>
-            </div>
-            <div class="mb-6">
-              <label class="block text-md font-light mb-1"
-                >Konfirmasi Password
-                <span class="text-red-500"> * </span></label
-              >
-              <input
-                type="password"
-                id="confirmPassword"
-                class="w-full px-4 bg-transparent py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                placeholder="Ulangi Password"
-                required
-              />
-              <p
-                id="confirmHint"
-                class="text-sm font-light font mt-2 opacity-50"
-              >
-                > Harus sesuai dengan Password <br />
-              </p>
-            </div>
-            <div class="mb-6">
-              <label
-                for="binusian"
-                class="flex items-center gap-3 cursor-pointer"
-              >
-                <span class="text-md font-light">Binusian</span>
-                <input type="checkbox" id="binusian" class="peer hidden" />
-                <span
-                  class="w-5 h-5 rounded-full border-2 border-border-default flex items-center justify-center peer-checked:border-brand peer-checked:bg-brand transition"
-                >
-                  <span
-                    class="w-2.5 h-2.5 rounded-full bg-white scale-0 peer-checked:scale-100 transition"
-                  ></span>
-                </span>
-              </label>
-            </div>
-
-            <div class="flex justify-end">
-              <button
-                id="nextButton"
-                class="bg-transparent border-solid border-2 p-1 rounded-full pr-5 pl-5 border-indigo-500 transition-all duration-300 hover:shadow-[0_0_12px_rgba(99,102,241,0.8)] hover:bg-indigo-500/10"
-                type="button"
-                onclick="nextStep()"
-              >
-                Next Page
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <!-- Step 2: Group Information -->
-        <section class="step hidden grid grid-cols-2 gap-10">
-          <div>
-            <h2 class="text-4xl font-light text-heading text-left mb-2">
-              Register
-            </h2>
-            <p class="text-md font-light mb-3 top-0">Informasi Leader</p>
-            <button
-              class="mt-auto bg-transparent border-solid border-2 p-1 rounded-full pr-5 pl-5 border-indigo-500 transition-all duration-300 hover:shadow-[0_0_12px_rgba(99,102,241,0.8)] hover:bg-indigo-500/10"
-              type="button"
-              onclick="prevStep()"
-            >
-              Previous Page
-            </button>
-          </div>
-
-          <div>
-            <div class="mb-4">
-              <label class="block text-md font-light mb-1"
-                >Full Name <span class="text-red-500"> * </span></label
-              >
-              <input
-                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                placeholder="Full Name |"
-                id="fullName"
-                required
-              />
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-md font-light mb-1"
-                >Email <span class="text-red-500"> * </span></label
-              >
-              <input
-                id="email"
-                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                placeholder="Email |"
-                required
-              />
-              <p id="emailHint" class="text-sm font-light font mt-2 opacity-50">
-                > Pastikan Email Valid dan Mengandung "@" <br />
-                > Email Harus Unik <br />
-              </p>
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-md font-light mb-1"
-                >Whatsapp Number <span class="text-red-500"> * </span></label
-              >
-              <input
-                id="whatsapp"
-                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                placeholder="Whatsapp Number |"
-                required
-              />
-              <p
-                id="whatsappHint"
-                class="text-sm font-light font mt-2 opacity-50"
-              >
-                > Minimal 9 digit <br />
-                > Harus Nomor Whatsapp Unik <br />
-              </p>
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-md font-light mb-1"
-                >LINE ID <span class="text-red-500"> * </span></label
-              >
-              <input
-                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                placeholder="LINE ID |"
-                id="lineID"
-                required
-              />
-              <p class="text-sm font-light font mt-2 opacity-50">
-                > LINE ID harus unik<br />
-              </p>
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-md font-light mb-1"
-                >Github/ Gitlab ID <span class="text-red-500"> * </span></label
-              >
-              <input
-                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                placeholder="Github/ Gitlab ID |"
-                id="githubId"
-                required
-              />
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-md font-light mb-1"
-                >Birth Place <span class="text-red-500"> * </span></label
-              >
-              <input
-                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                placeholder="Birth Place |"
-                id="birthPlace"
-                required
-              />
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-md font-light mb-1"
-                >Birth Date <span class="text-red-500"> * </span></label
-              >
-              <input
-                id="birthdateInput"
-                type="date"
-                class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                required
-              />
-              <p
-                id="birthdateHint"
-                class="text-sm font-light font mt-2 opacity-50"
-              >
-                > Umur minimal 17 Tahun<br />
-              </p>
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-md font-light mb-1"
-                >Upload CV <span class="text-red-500"> * </span></label
-              >
-              <input
-                type="file"
-                class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                placeholder="Upload CV |"
-                id="cvFile"
-                required
-              />
-              <p class="text-sm font-light font mt-2 opacity-50">
-                > Format file pdf, jpg, jpeg & png<br />
-              </p>
-            </div>
-
-            <div class="mb-4">
-              <p class="text-sm font-light font mt-2 text-red-500">
-                !! Binusian harus mengunggah KTM Flazz Card, sedangkan
-                Non-Binusian mengunggah KTM !! <br />
-              </p>
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-md font-light mb-1"
-                >Upload Flazz Card (Binusian)</label
-              >
-              <input
-                type="file"
-                class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                placeholder="Upload Flazz Card |"
-                id="idCardFile"
-              />
-              <p class="text-sm font-light font mt-2 opacity-50">
-                > Format file pdf, jpg, jpeg & png<br />
-              </p>
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-md font-light mb-1"
-                >Upload ID Card (Non- Binusian)</label
-              >
-              <input
-                type="file"
-                class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
-                placeholder="Upload ID Card |"
-                id="idCardFile"
-              />
-              <p class="text-sm font-light font mt-2 opacity-50">
-                > Format file pdf, jpg, jpeg & png<br />
-              </p>
-            </div>
-
-            <div class="flex justify-between items-center gap-4">
-              <p class="text-sm text-muted text-left">
-                Sudah punya akun?
-                <a href="login.html" class="text-brand hover:underline">
-                  Login
-                </a>
-              </p>
-              <button
-                id="registerButton"
-                i
-                href="./login.html"
-                class="bg-transparent border-solid border-2 p-1 rounded-full pr-5 pl-5 border-indigo-500 transition-all duration-300 hover:shadow-[0_0_12px_rgba(99,102,241,0.8)] hover:bg-indigo-500/10"
-                type="button"
-                onclick="validateStep()"
-              >
-                Register
-              </button>
-            </div>
-          </div>
-        </section>
-      </form>
+    <!-- Gradient Background Effects -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[360px] sm:w-[620px] sm:h-[420px] bg-brand/20 blur-[140px] rounded-full"
+      ></div>
+      <div
+        class="absolute top-20 left-[-260px] w-48 h-48 sm:w-64 sm:h-64 lg:w-[380px] lg:h-[280px] rounded-full bg-accent/20 blur-[100px]"
+      ></div>
+      <div
+        class="absolute bottom-[-120px] right-[-220px] w-64 h-64 sm:w-80 sm:h-80 lg:w-[420px] lg:h-[520px] rounded-full bg-accent/20 blur-[120px]"
+      ></div>
     </div>
 
-    <!-- Flowbite JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+    <!-- Main Content -->
+    <div
+      class="relative min-h-screen flex items-center justify-center px-4 py-8"
+    >
+      <div class="w-full max-w-6xl">
+        <form
+          class="bg-nav/50 backdrop-blur-xl rounded-3xl p-8 sm:p-10 md:p-12 lg:p-16 shadow-[0_0_100px_5px_rgba(39,33,106,0.6)]"
+        >
+          <!-- Error Message -->
+          <p
+            id="emptyField"
+            class="mb-4 text-red-400 text-sm text-center hidden"
+          >
+            Be sure to fill in all fields marked with
+            <span class="text-red-500">(*)</span> has been filled in
+          </p>
 
-    <!-- JS Links -->
+          <!-- Step 1: Group Information -->
+          <section class="step">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+              <!-- Left Column - Header -->
+              <div class="lg:sticky lg:top-8 lg:self-start">
+                <h2
+                  class="text-3xl sm:text-4xl md:text-5xl font-light text-heading mb-2"
+                >
+                  Register
+                </h2>
+                <p class="text-base sm:text-lg font-light text-body mb-6">
+                  Group Information
+                </p>
+              </div>
+
+              <!-- Right Column - Form Fields -->
+              <div class="space-y-5">
+                <!-- Group Name -->
+                <div>
+                  <label
+                    for="name"
+                    class="block text-sm sm:text-base mb-2 text-body"
+                  >
+                    Group Name<span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="name"
+                    type="text"
+                    placeholder="Group Name |"
+                    required
+                    class="w-full px-4 py-3 bg-white/5 border-2 border-heading/50 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition-all duration-200"
+                  />
+                </div>
+
+                <!-- Password -->
+                <div>
+                  <label
+                    for="password"
+                    class="block text-sm sm:text-base mb-2 text-body"
+                  >
+                    Password <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="password"
+                    type="password"
+                    placeholder="Password |"
+                    required
+                    class="w-full px-4 py-3 bg-white/5 border-2 border-heading/50 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition-all duration-200"
+                  />
+                  <p
+                    id="passwordError"
+                    class="text-xs sm:text-sm font-light mt-2 text-body/70"
+                  >
+                    > Minimum 8 characters<br />
+                    > Using Lowercase and Uppercase<br />
+                    > Using Numbers<br />
+                    > Using Special Characters
+                  </p>
+                </div>
+
+                <!-- Confirm Password -->
+                <div>
+                  <label
+                    for="confirmPassword"
+                    class="block text-sm sm:text-base mb-2 text-body"
+                  >
+                    Confirm Password <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="confirmPassword"
+                    type="password"
+                    placeholder="Confirm Password |"
+                    required
+                    class="w-full px-4 py-3 bg-white/5 border-2 border-heading/50 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition-all duration-200"
+                  />
+                  <p
+                    id="confirmHint"
+                    class="text-xs sm:text-sm font-light mt-2 text-body/70"
+                  >
+                    > Must match the Password
+                  </p>
+                </div>
+
+                <!-- Binusian Checkbox -->
+                <div>
+                  <label
+                    for="binusian"
+                    class="flex items-center gap-3 cursor-pointer select-none"
+                  >
+                    <input type="checkbox" id="binusian" class="peer hidden" />
+                    <span class="text-sm sm:text-base"> Binusian </span>
+                    <span
+                      class="w-5 h-5 rounded-full border-2 border-white/60 flex items-center justify-center peer-checked:border-brand peer-checked:bg-brand transition-all duration-200"
+                    >
+                      <i
+                        data-lucide="check"
+                        class="w-3 h-3 text-white opacity-0 peer-checked:opacity-100"
+                      ></i>
+                    </span>
+                  </label>
+                </div>
+
+                <!-- Next Button -->
+                <div class="flex justify-end pt-4">
+                  <button
+                    id="nextButton"
+                    type="button"
+                    onclick="nextStep()"
+                    class="px-8 py-3 rounded-full border-2 border-brand bg-brand/10 text-heading font-medium hover:bg-brand/30 focus:outline-none focus:ring-4 focus:ring-brand/30 transition-all duration-200"
+                  >
+                    Next Page
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Step 2: Leader Information -->
+          <section class="step hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+              <!-- Left Column - Header -->
+              <div class="lg:sticky lg:top-8 lg:self-start">
+                <h2
+                  class="text-3xl sm:text-4xl md:text-5xl font-light text-heading mb-2"
+                >
+                  Register
+                </h2>
+                <p class="text-base sm:text-lg font-light text-body mb-6">
+                  Leader Information
+                </p>
+
+                <!-- Previous Button -->
+                <button
+                  type="button"
+                  onclick="prevStep()"
+                  class="px-8 py-3 rounded-full border-2 border-brand bg-brand/10 text-heading font-medium hover:bg-brand/30 focus:outline-none focus:ring-4 focus:ring-brand/30 transition-all duration-200"
+                >
+                  Previous Page
+                </button>
+              </div>
+
+              <!-- Right Column - Form Fields -->
+              <div class="space-y-5">
+                <!-- Full Name -->
+                <div>
+                  <label
+                    for="fullName"
+                    class="block text-sm sm:text-base mb-2 text-body"
+                  >
+                    Full Name <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="fullName"
+                    type="text"
+                    placeholder="Full Name |"
+                    required
+                    class="w-full px-4 py-3 bg-white/5 border-2 border-heading/50 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition-all duration-200"
+                  />
+                </div>
+
+                <!-- Email -->
+                <div>
+                  <label
+                    for="email"
+                    class="block text-sm sm:text-base mb-2 text-body"
+                  >
+                    Email <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    placeholder="Email |"
+                    required
+                    class="w-full px-4 py-3 bg-white/5 border-2 border-heading/50 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition-all duration-200"
+                  />
+                  <p
+                    id="emailHint"
+                    class="text-xs sm:text-sm font-light mt-2 text-body/70"
+                  >
+                    > Make sure the Email is Valid and contains "@"<br />
+                    > Email Must Be Unique
+                  </p>
+                </div>
+
+                <!-- WhatsApp Number -->
+                <div>
+                  <label
+                    for="whatsapp"
+                    class="block text-sm sm:text-base mb-2 text-body"
+                  >
+                    Whatsapp Number <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="whatsapp"
+                    type="tel"
+                    placeholder="Whatsapp Number |"
+                    required
+                    class="w-full px-4 py-3 bg-white/5 border-2 border-heading/50 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition-all duration-200"
+                  />
+                  <p
+                    id="whatsappHint"
+                    class="text-xs sm:text-sm font-light mt-2 text-body/70"
+                  >
+                    > Minimal 9 digit<br />
+                    > Must be a Unique Whatsapp Number
+                  </p>
+                </div>
+
+                <!-- LINE ID -->
+                <div>
+                  <label
+                    for="lineID"
+                    class="block text-sm sm:text-base mb-2 text-body"
+                  >
+                    LINE ID <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="lineID"
+                    type="text"
+                    placeholder="LINE ID |"
+                    required
+                    class="w-full px-4 py-3 bg-white/5 border-2 border-heading/50 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition-all duration-200"
+                  />
+                  <p class="text-xs sm:text-sm font-light mt-2 text-body/70">
+                    > LINE ID must be unique
+                  </p>
+                </div>
+
+                <!-- Github/Gitlab ID -->
+                <div>
+                  <label
+                    for="githubId"
+                    class="block text-sm sm:text-base mb-2 text-body"
+                  >
+                    Github/Gitlab ID <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="githubId"
+                    type="text"
+                    placeholder="Github/Gitlab ID |"
+                    required
+                    class="w-full px-4 py-3 bg-white/5 border-2 border-heading/50 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition-all duration-200"
+                  />
+                </div>
+
+                <!-- Birth Place -->
+                <div>
+                  <label
+                    for="birthPlace"
+                    class="block text-sm sm:text-base mb-2 text-body"
+                  >
+                    Birth Place <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="birthPlace"
+                    type="text"
+                    placeholder="Birth Place |"
+                    required
+                    class="w-full px-4 py-3 bg-white/5 border-2 border-heading/50 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition-all duration-200"
+                  />
+                </div>
+
+                <!-- Birth Date -->
+                <div>
+                  <label
+                    for="birthdateInput"
+                    class="block text-sm sm:text-base mb-2 text-body"
+                  >
+                    Birth Date <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="birthdateInput"
+                    type="date"
+                    required
+                    class="w-full px-4 py-3 bg-white/5 border-2 border-heading/50 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition-all duration-200"
+                  />
+                  <p
+                    id="birthdateHint"
+                    class="text-xs sm:text-sm font-light mt-2 text-body/70"
+                  >
+                    > Minimum age is 17 years old
+                  </p>
+                </div>
+
+                <!-- Upload CV -->
+                <div>
+                  <label class="block text-sm sm:text-base mb-2 text-body">
+                    Upload CV <span class="text-red-500">*</span>
+                  </label>
+                  <label
+                    for="cvFile"
+                    class="flex items-center gap-4 w-full px-4 py-3 rounded-xl border-2 border-heading/50 bg-white/5 cursor-pointer hover:border-brand transition-all duration-200"
+                  >
+                    <span
+                      class="px-4 py-2 rounded-lg bg-brand/20 text-brand text-sm font-medium"
+                    >
+                      Choose File
+                    </span>
+                    <span
+                      id="cvFileName"
+                      class="text-white/60 text-sm truncate"
+                    >
+                      No file chosen
+                    </span>
+                  </label>
+                  <input
+                    id="cvFile"
+                    type="file"
+                    required
+                    class="hidden"
+                    onchange="updateFileName(this, 'cvFileName')"
+                  />
+                  <p class="text-xs sm:text-sm font-light mt-2 text-body/70">
+                    &gt; Format file pdf, jpg, jpeg & png
+                  </p>
+                </div>
+
+                <!-- Warning Message -->
+                <div
+                  class="bg-red-500/10 border border-red-500/30 rounded-xl p-4"
+                >
+                  <p class="text-xs sm:text-sm font-light text-red-400">
+                    !! Binusian must upload Flazz Card KTM, while Non-Binusian
+                    must upload KTM !!
+                  </p>
+                </div>
+
+                <!-- Upload Flazz Card (Binusian) -->
+                <div>
+                  <label class="block text-sm sm:text-base mb-2 text-body">
+                    Upload Flazz Card (Binusian)
+                  </label>
+                  <label
+                    for="flazzFile"
+                    class="flex items-center gap-4 w-full px-4 py-3 rounded-xl border-2 border-heading/50 bg-white/5 cursor-pointer hover:border-brand transition-all duration-200"
+                  >
+                    <span
+                      class="px-4 py-2 rounded-lg bg-brand/20 text-brand text-sm font-medium"
+                    >
+                      Choose File
+                    </span>
+                    <span
+                      id="flazzFileName"
+                      class="text-white/60 text-sm truncate"
+                    >
+                      No file chosen
+                    </span>
+                  </label>
+                  <input
+                    id="flazzFile"
+                    type="file"
+                    class="hidden"
+                    onchange="updateFileName(this, 'flazzFileName')"
+                  />
+                  <p class="text-xs sm:text-sm font-light mt-2 text-body/70">
+                    &gt; Format file pdf, jpg, jpeg & png
+                  </p>
+                </div>
+
+                <!-- Upload ID Card (Non-Binusian) -->
+                <div>
+                  <label class="block text-sm sm:text-base mb-2 text-body">
+                    Upload ID Card (Non-Binusian)
+                  </label>
+
+                  <label
+                    for="idCardFile"
+                    class="flex items-center gap-4 w-full px-4 py-3 rounded-xl border-2 border-heading/50 bg-white/5 cursor-pointer hover:border-brand transition-all duration-200"
+                  >
+                    <span
+                      class="px-4 py-2 rounded-lg bg-brand/20 text-brand text-sm font-medium"
+                    >
+                      Choose File
+                    </span>
+                    <span
+                      id="idCardFileName"
+                      class="text-white/60 text-sm truncate"
+                    >
+                      No file chosen
+                    </span>
+                  </label>
+                  <input
+                    id="idCardFile"
+                    type="file"
+                    class="hidden"
+                    onchange="updateFileName(this, 'idCardFileName')"
+                  />
+
+                  <p class="text-xs sm:text-sm font-light mt-2 text-body/70">
+                    &gt; Format file pdf, jpg, jpeg & png
+                  </p>
+                </div>
+
+                <!-- Footer Actions -->
+                <div
+                  class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4"
+                >
+                  <p
+                    class="text-xs sm:text-sm text-muted text-center sm:text-left"
+                  >
+                    Already have an account?
+                    <a
+                      href="login.html"
+                      class="text-brand hover:text-heading underline transition-colors duration-200"
+                    >
+                      Login here
+                    </a>
+                  </p>
+                  <button
+                    id="registerButton"
+                    type="button"
+                    onclick="validateStep()"
+                    class="w-full sm:w-auto px-8 py-3 rounded-full border-2 border-brand bg-brand/10 text-heading font-medium hover:bg-brand/30 focus:outline-none focus:ring-4 focus:ring-brand/30 transition-all duration-200"
+                  >
+                    Register
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      lucide.createIcons();
+    </script>
+
     <script src="./js/api.js" defer></script>
     <script src="./js/auth.js" defer></script>
     <script src="./js/main.js" defer></script>
