@@ -5,57 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Login | TPM Hackathon</title>
 
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Tailwind Config -->
     <script src="../config/tailwind.config.js"></script>
 
+    <!-- Flowbite CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
       rel="stylesheet"
     />
+
+    <!-- Main JS -->
+    <script src="../js/main.js" defer></script>
   </head>
 
   <body
-    class="bg-background flex items-center justify-center min-h-screen text-body"
+    class="min-h-screen text-body bg-[radial-gradient(circle_at_top_right,rgba(500,120,254,1),#04081F_20%)]"
   >
-    <form
-      class="bg-neutral-primary p-8 rounded-base shadow w-full max-w-md border border-border-default"
-    >
-      <h2 class="text-xl font-bold mb-6 text-center text-heading">
-        Admin Login
-      </h2>
-
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">Username</label>
-        <input
-          class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand outline-none"
-          placeholder="Admin username"
-        />
-      </div>
-
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-1">Password</label>
-        <input
-          type="password"
-          class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand outline-none"
-          placeholder="Password"
-        />
-      </div>
-
-      <a
-        href="./admin-dashboard.html"
-        class="block w-full text-center bg-brand text-white py-2 mb-4 rounded-base hover:bg-brand-dark transition font-medium"
+    <div class="min-h-screen flex items-center justify-center px-4">
+      <form
+        class="relative p-12 rounded-2xl w-full max-w-screen-md mt-10 mb-10 bg-[rgba(39,33,106,1)]"
       >
-        Login
-      </a>
+        <div
+          class="absolute -inset-3 blur-md bg-[rgba(39,33,106,1)] opacity-80 -z-10"
+        ></div>
+        <p id="errorText" class="mt-2 mb-5 text-red-500 hidden">
+          Pastikan untuk mengisi semua field telah diisi
+        </p>
+        <div class="p-5 flex flex-col items-center">
+          <h2 class="text-3xl font-light text-heading text-center mb-5">
+            Login
+          </h2>
 
-      <a
-        href="../login.html"
-        class="block w-full text-center bg-neutral-secondary-soft text-heading py-2 rounded-base border border-border-default hover:bg-neutral-tertiary transition font-medium"
-      >
-        Login as Participants
-      </a>
-    </form>
+          <div class="mb-6 w-full flex flex-col items-center">
+            <div class="w-9/12">
+              <label class="block text-sm font-medium mb-1 text-left">
+                Admin Username
+              </label>
+              <input
+                class="w-full px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Admin Username"
+                id="teamInput"
+                required
+              />
+            </div>
+          </div>
 
+          <div class="mb-6 w-full flex flex-col items-center">
+            <div class="w-9/12">
+              <label class="block text-sm font-medium mb-1 text-left">
+                Password
+              </label>
+              <input
+                type="password"
+                class="w-full bg-transparent px-4 py-2 border border-border-default rounded-base focus:ring-2 focus:ring-brand focus:border-brand outline-none"
+                placeholder="Password"
+                id="passwordInput"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="flex gap-4 justify-center">
+            <button
+              type="button"
+              class="bg-transparent border-2 rounded-full px-5 py-1 border-indigo-500 transition-all duration-300 hover:shadow-[0_0_12px_rgba(99,102,241,0.8)] hover:bg-indigo-500/10"
+              onclick="loginvalidate()"
+            >
+              Login
+            </button>
+            <a
+              href="../login.html"
+              class="bg-transparent border-2 rounded-full px-5 py-1 border-indigo-500 transition-all duration-300 hover:shadow-[0_0_12px_rgba(99,102,241,0.8)] hover:bg-indigo-500/10"
+            >
+              Login as Participant
+            </a>
+          </div>
+
+        </div>
+      </form>
+    </div>
+
+    <!-- Flowbite JS -->
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
   </body>
 </html>
