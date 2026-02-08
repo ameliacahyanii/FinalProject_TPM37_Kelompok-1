@@ -13,18 +13,26 @@
         const content = faqItem.querySelector(".faq-content");
         const icon = faqItem.querySelector(".faq-icon");
 
+        if (!content || !icon) return;
+
         const isActive = content.classList.contains("active");
 
         document.querySelectorAll(".faq-item").forEach((item) => {
           const itemContent = item.querySelector(".faq-content");
           const itemIcon = item.querySelector(".faq-icon");
 
-          itemContent.classList.remove("active");
-          itemIcon.textContent = "+";
+          if (itemContent) {
+            itemContent.classList.remove("active");
+            itemContent.style.maxHeight = "0px";
+          }
+          if (itemIcon) {
+            itemIcon.textContent = "+";
+          }
         });
 
         if (!isActive) {
           content.classList.add("active");
+          content.style.maxHeight = content.scrollHeight + "px";
           icon.textContent = "−";
         }
       });
@@ -79,14 +87,28 @@
     if (!menuButton || !mobileMenu) return;
 
     menuButton.addEventListener("click", () => {
+      const isHidden = mobileMenu.classList.contains("hidden");
       mobileMenu.classList.toggle("hidden");
+      menuButton.setAttribute("aria-expanded", !isHidden);
 
-      const isExpanded = !mobileMenu.classList.contains("hidden");
-      menuButton.setAttribute("aria-expanded", isExpanded);
+      // Add animation classes
+      if (!isHidden) {
+        mobileMenu.style.animation = "fadeOut 0.3s ease-out";
+      } else {
+        mobileMenu.style.animation = "fadeIn 0.3s ease-out";
+      }
     });
 
+    // Close menu when clicking outside
     document.addEventListener("click", (e) => {
       if (!menuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+        mobileMenu.classList.add("hidden");
+        menuButton.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !mobileMenu.classList.contains("hidden")) {
         mobileMenu.classList.add("hidden");
         menuButton.setAttribute("aria-expanded", "false");
       }
@@ -154,17 +176,40 @@
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const img = entry.target;
+          
+          img.style.opacity = '0';
+          img.style.transition = 'opacity 0.5s ease-in-out';
+          
           if (img.dataset.src) {
             img.src = img.dataset.src;
             img.removeAttribute("data-src");
           }
+          
+          img.onload = () => {
+            img.style.opacity = '1';
+          };
+          
+          img.onerror = () => {
+            img.style.opacity = '0.5';
+            console.warn(`Failed to load image: ${img.src}`);
+          };
+          
           imageObserver.unobserve(img);
         }
       });
+    }, {
+      rootMargin: '50px 0px',
+      threshold: 0.01
     });
 
-    const images = document.querySelectorAll("img[data-src]");
-    images.forEach((img) => imageObserver.observe(img));
+    const images = document.querySelectorAll("img[data-src], img[loading='lazy']");
+    images.forEach((img) => {
+      // Add loading placeholder
+      if (!img.complete) {
+        img.style.opacity = '0.7';
+      }
+      imageObserver.observe(img);
+    });
   };
 
   /* FORM VALIDATION */
@@ -275,6 +320,23 @@ function prevStep() {
   if (currentStep > 0) {
     currentStep--;
     showStep();
+  }
+}
+
+// File name update function
+function updateFileName(input, fileNameId) {
+  const fileNameElement = document.getElementById(fileNameId);
+  if (!fileNameElement) return;
+
+  if (input.files && input.files.length > 0) {
+    const fileName = input.files[0].name;
+    fileNameElement.textContent = fileName;
+    fileNameElement.classList.remove("text-white/60");
+    fileNameElement.classList.add("text-white");
+  } else {
+    fileNameElement.textContent = "No file chosen";
+    fileNameElement.classList.add("text-white/60");
+    fileNameElement.classList.remove("text-white");
   }
 }
 
@@ -446,7 +508,7 @@ if (passwordInput) passwordInput.addEventListener("input", validateConfirmPasswo
 
 // Email validation
 const emailInput = document.getElementById("email");
-const emailError = document.getElementById("emailError");
+const emailHint = document.getElementById("emailHint");
 
 function validateEmail() {
   const email = emailInput.value.trim();
@@ -457,7 +519,8 @@ function validateEmail() {
   // Empty → neutral
   if (email.length === 0) {
     emailInput.classList.remove("border-red-500");
-    emailError.classList.add("hidden");
+    emailHint.classList.remove("text-red-500");
+    emailHint.classList.add("opacity-50");
     return;
   }
 
@@ -478,7 +541,7 @@ if (emailInput) emailInput.addEventListener("input", validateEmail);
 
 // Whatsapp validation
 const whatsappInput = document.getElementById("whatsapp");
-const whatsappError = document.getElementById("whatsappError");
+const whatsappHint = document.getElementById("whatsappHint");
 
 function validateWhatsapp() {
   const value = whatsappInput.value.trim();
@@ -489,18 +552,21 @@ function validateWhatsapp() {
   // empty → neutral
   if (value.length === 0) {
     whatsappInput.classList.remove("border-red-500", "border-green-500");
-    whatsappError.classList.add("hidden");
+    whatsappHint.classList.remove("text-red-500");
+    whatsappHint.classList.add("opacity-50");
     return;
   }
 
   if (whatsappRegex.test(value)) {
     // valid
     whatsappInput.classList.remove("border-red-500");
+    whatsappInput.classList.add("border-green-500");
     whatsappHint.classList.add("opacity-50");
     whatsappHint.classList.remove("text-red-500");
   } else {
     // invalid
     whatsappInput.classList.add("border-red-500");
+    whatsappInput.classList.remove("border-green-500");
     whatsappHint.classList.add("text-red-500");
     whatsappHint.classList.remove("opacity-50");
   }

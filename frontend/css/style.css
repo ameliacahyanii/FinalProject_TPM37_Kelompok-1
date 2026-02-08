@@ -92,7 +92,32 @@ textarea:focus {
 }
 
 .faq-content {
+  max-height: 0px;
   transition: max-height 0.3s ease-out;
+  overflow: hidden;
+}
+
+/* Mobile menu animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
 }
 
 /* CARD STYLES */
@@ -242,6 +267,32 @@ section .absolute.rounded-full:nth-child(3) {
   h6 {
     word-wrap: break-word;
     overflow-wrap: break-word;
+  }
+
+  /* Improve mobile navigation */
+  .mobile-menu {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: rgba(39, 33, 106, 0.95);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 40;
+  }
+
+  /* Mobile text sizing */
+  .text-2xl {
+    font-size: 1.5rem;
+  }
+
+  .text-5xl {
+    font-size: 2.5rem;
+  }
+
+  /* Mobile button improvements */
+  button, a {
+    touch-action: manipulation;
   }
 }
 
